@@ -8,6 +8,7 @@
 
 1. To startup
 ```docker-compose up -d --build```
+3. Navigate to `http://localhost:8000`
 2. To shutdown
 ```docker compose down```
 
@@ -17,6 +18,7 @@ More information: [backend readme](backend/README.md)
 
 1. To startup
 ```docker compose up -d```
+3. Navigate to http://localhost
 2. To shutdown
 ```docker compose down```
 

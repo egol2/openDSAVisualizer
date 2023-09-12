@@ -1,0 +1,3 @@
+# openDSAVisualizer
+
+Basic readme

@@ -1,0 +1,22 @@
+services:
+
+  frontend:
+    build:
+      context: ./frontend
+      # target: build
+    ports:
+      - 80:80
+    container_name: frontend
+    depends_on: 
+      - backend
+  backend:
+    build:
+      context: ./backend
+      target: builder
+    container_name: backend
+    environment:
+      PORT: 8000
+    ports:
+      - '8000:8000'
+    restart: "no"
+

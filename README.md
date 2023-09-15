@@ -46,3 +46,21 @@ otherwise:
 
 Navigate to http://localhost:80/ or http://localhost
 **Note:** firefox blocks the frontend of the fullstack due to nginx not having a valid certificate.
+
+### If you use firefox
+
+To allow dockers to communicate to each other:
+1. type into the search bar -> about:config
+2. in the search bar that pops up: security.fileuri.strict_origin_policy -> false
+
+This is necessary as firefox does not allow self-signing certificates
+
+### misc commands
+
+Enter frontend docker:
+- ``docker exec -it frontend-1 sh``
+get ip of docker container:
+``docker inspect \``
+``-f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id``
+curl to test backend:
+- ``curl -X GET "[insert ip from above command]:8000"``

@@ -44,7 +44,7 @@ otherwise:
 1. To run: ``docker compose up -d --build``
 2. To shutdown: ``docker compose down``
 
-Navigate to http://localhost:80/ or http://localhost
+Navigate to http://localhost:80/ or http://localhost  
 **Note:** firefox blocks the frontend of the fullstack due to nginx not having a valid certificate.
 
 ### If you use firefox
@@ -57,10 +57,10 @@ This is necessary as firefox does not allow self-signing certificates
 
 ### misc commands
 
-Enter frontend docker:
-- ``docker exec -it frontend-1 sh``
-get ip of docker container:
+- Enter frontend docker:
+``docker exec -it frontend-1 sh``
+- get ip of docker container:
 ``docker inspect \``
 ``-f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id``
-curl to test backend:
-- ``curl -X GET "[insert ip from above command]:8000"``
+- curl to test backend:
+``curl -X GET "[insert ip from above command]:8000"``

@@ -5,13 +5,20 @@ import '../styles/Upload.css';
 import { TextField } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Box from '@mui/material/Box';
+import { Navigate } from 'react-router-dom';
 
 const Upload = () => {
     const [selectedFile, setSelectedFile] = useState(null);
-  
+    const [navigateToDashboard, setNavigateToDashboard] = useState(false);
+
+    if (navigateToDashboard) {
+      return <Navigate to="/dashboard" />;
+    }
+
     const handleFileChange = (event) => {
       const file = event.target.files[0];
       setSelectedFile(file);
+
     };
   
     const handleUpload = () => {
@@ -19,6 +26,8 @@ const Upload = () => {
       if (selectedFile) {
         console.log('Uploading file:', selectedFile);
         //sending the file to a server
+        
+      setNavigateToDashboard(true);
       }
     };
   

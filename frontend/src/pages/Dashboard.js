@@ -5,14 +5,25 @@ import '../styles/Dashboard.css';
 import { TextField } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Box from '@mui/material/Box';
+import { Navigate } from 'react-router-dom';
 
 const Dashboard = () => {
     
     const [selectedStudent, setSelectedStudent] = useState(null);
+    const [navigateToUpload, setNavigateToUpload] = useState(false);
+    
 
     const handleStudentClick = (student) => {
         setSelectedStudent(student);
     };
+
+    const handleNavigate = () => {
+        setNavigateToUpload(true);
+    };
+
+    if (navigateToUpload) {
+        return <Navigate to="/upload" />;
+    }
 
     const StudentDetail = ({ student }) => {
         return (
@@ -49,7 +60,7 @@ const Dashboard = () => {
         <div>
             <div className='dashboard-header'>
                 <h1>Dashboard</h1>
-                <Button className='back-to-upload-button'>BACK TO Upload</Button>
+                <Button className='back-to-upload-button' onClick={handleNavigate}>BACK TO Upload</Button>
             </div>
             <div className='dashboard-container'>
                 <StudentList students={studentsData} onStudentClick={handleStudentClick}/>

@@ -1,11 +1,11 @@
-import Upload from './components/uploadPage';
-import Dashboard from './components/dashboard';
+import Upload from './components/Upload';
+import Dashboard from './components/Dashboard';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      
+      <Upload/>
     </div>
   );
 }

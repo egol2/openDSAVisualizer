@@ -26,16 +26,14 @@ const Upload = () => {
       if (selectedFile) {
         console.log('Uploading file:', selectedFile);
         //sending the file to a server
-        
-      setNavigateToDashboard(true);
+
       }
+  
+      //setNavigateToDashboard(true);
     };
   
     return (
         <div className="upload-page-container">
-            <div className='header'>
-                <h1>OpenDSA Data Visualizer</h1>
-            </div>
             
             <div className='input-file-wrapper'>
                 <Box className='input-box' sx={{ display: 'flex', alignItems: 'center' }}>

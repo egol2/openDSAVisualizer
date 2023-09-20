@@ -1,23 +1,18 @@
 import Upload from './pages/Upload';
 import Dashboard from './pages/Dashboard';
 import './App.css';
-import { BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom';
+import { useLocation, Router, Routes, Route, Link } from 'react-router-dom';
+import Header from './components/Header';
 
 function App() {
+
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/upload" element={<Upload />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
 
-        <Upload/>
-
-      </div>
-    </Router>
-      
-
+    <div>
+      <Header/>  
+      <Dashboard/>
+    </div>
+    
     
   );
 }

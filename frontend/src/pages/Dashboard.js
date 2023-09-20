@@ -58,10 +58,8 @@ const Dashboard = () => {
       
     return (
         <div>
-            <div className='dashboard-header'>
-                <h1>Dashboard</h1>
-                <Button className='back-to-upload-button' onClick={handleNavigate}>BACK TO Upload</Button>
-            </div>
+            <Button className='back-to-upload-button' onClick={handleNavigate}>BACK TO Upload</Button>
+            
             <div className='dashboard-container'>
                 <StudentList students={studentsData} onStudentClick={handleStudentClick}/>
                 {selectedStudent && <StudentDetail student={selectedStudent} />}

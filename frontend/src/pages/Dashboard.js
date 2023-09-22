@@ -7,6 +7,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Box from '@mui/material/Box';
 import { Navigate } from 'react-router-dom';
 import StateGraph from '../components/StateGraph';
+import ScatterPlot from '../components/ScatterPlot';
 const Dashboard = () => {
     
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -58,14 +59,20 @@ const Dashboard = () => {
       
     return (
         <div>
-            <Button className='back-to-upload-button' onClick={handleNavigate}>BACK TO Upload</Button>
+            <Button className='back-to-upload-button'>BACK TO Upload</Button>
             
             <div className='dashboard-container'>
                 <StudentList students={studentsData} onStudentClick={handleStudentClick}/>
                 {selectedStudent && <StudentDetail student={selectedStudent} />}
+                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }} >
+                    <StateGraph/>
+                    <ScatterPlot style={{marginLeft: '20px'}}/>                   
+                </Box>
+                
+                
             </div>
 
-            <StateGraph/>
+            
         </div>
     );
 }

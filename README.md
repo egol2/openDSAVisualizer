@@ -31,6 +31,8 @@ If you have ``make`` installed:
 otherwise:
 1. ``cd frontend``
 2. To run: ``docker compose up`` (add ``-d`` if you dont want it to output to console)
+    - ``docker compose up --build`` If a new package has been added
+    - may need to clear any cached docker images.
 3. To shutdown: ``docker compose down``
 
 Navigate to http://localhost:3000/

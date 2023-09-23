@@ -17,12 +17,15 @@ RUN npm ci
 # Add rest of the client code
 COPY . /app
 
-ENV CI=true
+#ENV CI=true
 ENV PORT=3000
 
 # EXPOSE 3000
 
 CMD [ "npm", "start" ]
+
+
+FROM development AS build
 
 ##-------------------
 ## add plugins here:
@@ -33,10 +36,6 @@ RUN npm install @emotion/react @emotion/styled
 RUN npm install @mui/styled-engine
 RUN npm install d3
 RUN npm install react-router-dom
-
-
-FROM development AS build
-
 RUN npm run build
 
 # FROM development as dev-envs

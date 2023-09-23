@@ -10,33 +10,55 @@ import { Navigate } from 'react-router-dom';
 const Upload = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectedScoreFile, setSelectedScoreFile] = useState(null);
+    const [selectedInteractionFile, setSelectedInteractionFile] = useState(null);
+
     const [navigateToDashboard, setNavigateToDashboard] = useState(false);
-    
-    // const form = document.querySelector('form');
-    // form.addEventListener('submit', handleSubmit);
-
-
-    // function handleSubmit(event) {
-    //   // The rest of the logic will go here.
-    //   console.log("HERE");
-    // }
     
     if (navigateToDashboard) {
       return <Navigate to="/dashboard" />;
     }
 
     const handleFileChange = (event) => {
-      const file = event.target.files[0];
-      setSelectedFile(file);
+      const exerciseFile = event.target.files[0];
+      // const interactionFile = event.target.files[0];
+      // const scoreFile = event.target.files[0];
+      setSelectedFile(exerciseFile);
+      // setSelectedScoreFile(interactionFile);
+      // setSelectedInteractionFile(scoreFile);
+
+   
     };
   
-    const handleUpload = () => {
+    const handleUpload = async () => {
       // Handle file upload logic here, e.g., send the file to a server.
       if (selectedFile) {
         console.log('Uploading file:', selectedFile);
+        // console.log('Uploading file:', selectedScoreFile);
+        // console.log('Uploading file:', selectedInteractionFile);
         //sending the file to a server
+        const formData = new FormData();
+
+        formData.append('file', selectedFile);  // 'file' is the field name for the server to retrieve the file
+
+        // Send the file to the server
+        try {
+            const response = await fetch('http://172.21.0.2:8000/uploadfile', { // '/upload-endpoint' is your server's endpoint to handle file uploads
+                method: 'POST',
+                body: formData,
+            });
+    
+            if (response.ok) {
+                console.log('File uploaded successfully');
+            } else {
+                console.error('File upload failed:', await response.text());
+            }
+        } catch (error) {
+            console.error('Error uploading the file:', error);
+        }
       }
       //setNavigateToDashboard(true);
+
+      
     };
   
     return (
@@ -61,14 +83,7 @@ const Upload = () => {
                 <Button className='upload-button' size="large" variant="outlined" color="error" onClick={handleUpload}>
                   Upload
                 </Button>
-
-                {/* <form action="/api" method="post" enctype="multipart/form-data">
-                  <label for="file">File</label>
-                  <input id="file" name="file" type="file" />
-                  <button>Upload</button>
-                </form> */}
-            </div>
-            
+            </div>        
         </div>
     );
   }

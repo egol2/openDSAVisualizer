@@ -31,6 +31,7 @@ CMD [ "npm", "start" ]
 RUN npm install @mui/material @mui/icons-material
 RUN npm install @emotion/react @emotion/styled
 RUN npm install @mui/styled-engine
+RUN npm install d3
 RUN npm install react-router-dom
 
 

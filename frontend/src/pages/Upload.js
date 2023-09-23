@@ -9,8 +9,18 @@ import { Navigate } from 'react-router-dom';
 
 const Upload = () => {
     const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedScoreFile, setSelectedScoreFile] = useState(null);
     const [navigateToDashboard, setNavigateToDashboard] = useState(false);
+    
+    // const form = document.querySelector('form');
+    // form.addEventListener('submit', handleSubmit);
 
+
+    // function handleSubmit(event) {
+    //   // The rest of the logic will go here.
+    //   console.log("HERE");
+    // }
+    
     if (navigateToDashboard) {
       return <Navigate to="/dashboard" />;
     }
@@ -18,7 +28,6 @@ const Upload = () => {
     const handleFileChange = (event) => {
       const file = event.target.files[0];
       setSelectedFile(file);
-
     };
   
     const handleUpload = () => {
@@ -26,9 +35,7 @@ const Upload = () => {
       if (selectedFile) {
         console.log('Uploading file:', selectedFile);
         //sending the file to a server
-
       }
-  
       //setNavigateToDashboard(true);
     };
   
@@ -54,6 +61,12 @@ const Upload = () => {
                 <Button className='upload-button' size="large" variant="outlined" color="error" onClick={handleUpload}>
                   Upload
                 </Button>
+
+                {/* <form action="/api" method="post" enctype="multipart/form-data">
+                  <label for="file">File</label>
+                  <input id="file" name="file" type="file" />
+                  <button>Upload</button>
+                </form> */}
             </div>
             
         </div>

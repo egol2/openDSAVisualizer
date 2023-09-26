@@ -15,7 +15,7 @@ If you have ``make`` installed:
 2. To shutdown: ```make backend-stop```
 
 otherwise:
-1. To run: ``docker-compose up backend -d --build``
+1. To run: ``docker compose up backend -d --build``
 2. To shutdown: ``docker compose down``
 
 Navigate to http://localhost:8000

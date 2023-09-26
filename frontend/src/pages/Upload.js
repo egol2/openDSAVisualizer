@@ -42,7 +42,7 @@ const Upload = () => {
 
         // Send the file to the server
         try {
-            const response = await fetch('http://172.21.0.2:8000/uploadfile', { // '/upload-endpoint' is your server's endpoint to handle file uploads
+            const response = await fetch('http://172.29.68.249:8000/uploadfile', { // '/upload-endpoint' is your server's endpoint to handle file uploads
                 method: 'POST',
                 body: formData,
             });

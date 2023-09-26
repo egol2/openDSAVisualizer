@@ -62,7 +62,7 @@ This is necessary as firefox does not allow self-signing certificates
 - Enter frontend docker:
 ``docker exec -it frontend-1 sh``
 - get ip of docker container:
-``docker inspect \``
-``-f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id``
+``docker inspect \
+-f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_name_or_id>``
 - curl to test backend:
 ``curl -X GET "[insert ip from above command]:8000"``

@@ -23,7 +23,8 @@ const ScatterPlot = () => {
             .attr('width', w)
             .attr('height', h)
             .style('overflow', 'visible')
-            .style('margin-top', '100px');
+            .style('margin-top', '100px')
+            .style('margin-bottom', '100px');
         //setting up scaling
         const xScale = d3.scaleLinear()
             .domain([0, 100])

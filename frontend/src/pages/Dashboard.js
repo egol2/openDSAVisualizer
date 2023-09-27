@@ -56,7 +56,8 @@ const Dashboard = () => {
             </ul>
         );
     };
-      
+    
+    const fakeFrequency = [8, 1, 10, 3, 4, 5];
     return (
         <div>
             <Button className='back-to-upload-button'>BACK TO Upload</Button>
@@ -65,7 +66,7 @@ const Dashboard = () => {
                 <StudentList students={studentsData} onStudentClick={handleStudentClick}/>
                 {selectedStudent && <StudentDetail student={selectedStudent} />}
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }} >
-                    <StateGraph/>
+                    <StateGraph fakeFrequency={fakeFrequency}/>
                     <ScatterPlot/>                   
                 </Box>
                 

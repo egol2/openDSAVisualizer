@@ -24,9 +24,6 @@ ENV PORT=3000
 
 CMD [ "npm", "start" ]
 
-
-FROM development AS build
-
 ##-------------------
 ## add plugins here:
 ##-------------------
@@ -37,6 +34,10 @@ RUN npm install @mui/styled-engine
 RUN npm install d3
 RUN npm install react-router-dom
 RUN npm run build
+
+FROM development AS build
+
+
 
 # FROM development as dev-envs
 # RUN <<EOF

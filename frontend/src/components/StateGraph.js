@@ -1,12 +1,12 @@
 import React from 'react';
-
+import '../styles/StateGraph.css';
 const StateGraph = (props) => {
 
 
     return (
         <svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
             
-            <path d="M 50 200 q 250 -350 500 0" stroke="#454747"
+            <path className="tooltip-path" d="M 50 200 q 250 -350 500 0" stroke="#454747"
             stroke-width={props.fakeFrequency[0]} fill="none" />
 
             <path d="M 50 200 q 125 -150 250 0" stroke="#454747"

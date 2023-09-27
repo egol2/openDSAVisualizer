@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import { Navigate } from 'react-router-dom';
 import StateGraph from '../components/StateGraph';
 import ScatterPlot from '../components/ScatterPlot';
+import Item from '../components/Item';
 const Dashboard = () => {
     
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -57,7 +58,7 @@ const Dashboard = () => {
         );
     };
     
-    const fakeFrequency = [8, 1, 10, 3, 4, 5];
+    const fakeFrequency = [8, 1, 10, 3, 4, 5]; //fake frequency for the state graph
     return (
         <div>
             <Button className='back-to-upload-button'>BACK TO Upload</Button>
@@ -67,7 +68,7 @@ const Dashboard = () => {
                 {selectedStudent && <StudentDetail student={selectedStudent} />}
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }} >
                     <StateGraph fakeFrequency={fakeFrequency}/>
-                    <ScatterPlot/>                   
+                    <ScatterPlot/>                         
                 </Box>
                 
                 

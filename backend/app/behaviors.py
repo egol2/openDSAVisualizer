@@ -7,7 +7,7 @@ def read_session_data(filename):
     global data
     print("working directory", os.getcwd())
     data = pd.read_csv(filename + "_merged_result_unannotated.csv")
-    users = data['user ID'].unique()
+    users = data['User ID'].unique()
     global df_dict
     df_dict = {elem: pd.DataFrame for elem in users}
     for user in df_dict.keys():

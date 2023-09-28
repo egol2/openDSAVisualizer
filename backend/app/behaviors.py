@@ -29,6 +29,8 @@ def getTransitionCounts(filename, start, end):
     match_count = 0
     previous_state = None
     current_state = None
+    previous_session = None
+    current_session = None
     # Initialize state transition counts dictionary
     transition_counts = {
         "RV": 0,
@@ -45,20 +47,20 @@ def getTransitionCounts(filename, start, end):
 
     # Process data
     for i in data.index - 1:
-        # If duration of the event is not na
-        if not pd.isna(data.iloc[i]['Start time']) and not pd.isna(data.iloc[i]['End Time']):
-            action_time = getDeltaTime(data.iloc[i]['Start time'], data.iloc[i]['End Time'])
-            # If the event lies within the threshold
-            if data.iloc[i]['Event name'] in reading:
-                current_state = 'R'
-            elif data.iloc[i]['Event name'] in visualization:
-                current_state = 'V'
-            elif data.iloc[i]['Event name'] in exercises:
-                current_state = 'E'
-            if previous_state is not None and current_state != previous_state:
-                transition_counts[previous_state + current_state] += 1
-                match_count += 1
-            previous_state = current_state
+        current_session = data.iloc[i]['session']
+        # If the event lies within the threshold
+        if data.iloc[i]['Event name'] in reading:
+            current_state = 'R'
+        elif data.iloc[i]['Event name'] in visualization:
+            current_state = 'V'
+        elif data.iloc[i]['Event name'] in exercises:
+            current_state = 'E'
+        if previous_state is not None and current_state != previous_state:
+            transition_counts[previous_state + current_state] += 1
+            match_count += 1
+        # If starting new session, reset previous state
+        previous_state = current_state if previous_session == current_session else None
+        previous_session = current_session
 
     # Final value output
     print("Total transition counts for student {}: {}".format(data.iloc[i - 1]['user ID'], match_count))

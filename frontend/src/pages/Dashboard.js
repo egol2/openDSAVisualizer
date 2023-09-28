@@ -8,23 +8,23 @@ import Box from '@mui/material/Box';
 import { Navigate } from 'react-router-dom';
 import StateGraph from '../components/StateGraph';
 import ScatterPlot from '../components/ScatterPlot';
+import Item from '../components/Item';
+
+import { Outlet, Link } from "react-router-dom";
+
 const Dashboard = () => {
     
     const [selectedStudent, setSelectedStudent] = useState(null);
-    const [navigateToUpload, setNavigateToUpload] = useState(false);
+    // const [navigateToUpload, setNavigateToUpload] = useState(false);
     
 
     const handleStudentClick = (student) => {
         setSelectedStudent(student);
     };
 
-    const handleNavigate = () => {
-        setNavigateToUpload(true);
-    };
-
-    if (navigateToUpload) {
-        return <Navigate to="/upload" />;
-    }
+    // const handleNavigate = () => {
+    //     setNavigateToUpload(true);
+    // };
 
     const StudentDetail = ({ student }) => {
         return (
@@ -56,17 +56,18 @@ const Dashboard = () => {
             </ul>
         );
     };
-      
+    
+    const fakeFrequency = [8, 1, 10, 3, 4, 5]; //fake frequency for the state graph
     return (
         <div>
-            <Button className='back-to-upload-button'>BACK TO Upload</Button>
+            <Link to="/Upload"><Button>Upload</Button></Link>
             
             <div className='dashboard-container'>
                 <StudentList students={studentsData} onStudentClick={handleStudentClick}/>
                 {selectedStudent && <StudentDetail student={selectedStudent} />}
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }} >
-                    <StateGraph/>
-                    <ScatterPlot/>                   
+                    <StateGraph fakeFrequency={fakeFrequency}/>
+                    <ScatterPlot/>                         
                 </Box>
                 
                 

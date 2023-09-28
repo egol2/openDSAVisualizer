@@ -1,0 +1,85 @@
+/* .tooltip {
+    position: relative;
+    height: 60px;
+    width: 250px;
+    background: #f2395a;
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    font-size: 18px;
+    margin: 0 auto;
+}
+
+.tooltip::before {
+    position: absolute;
+    z-index: 2;
+    display: none;
+    width: 200px;
+    padding: 10px;
+    font-size: 0.8em;
+    line-height: 1.4em;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color:white;
+    content: attr(title);
+}
+
+.tooltip::after {
+
+}
+
+.tooltip:hover::before {
+    display: inline-block;
+} */
+
+/* .data-tooltip {
+    position: relative;
+    cursor: default;
+}
+
+.data-tooltip::after {
+    position: absolute;
+    width: 140px;
+    left: calc(50% - 70px);
+    bottom: 125%;
+    text-align: center;
+    box-sizing: border-box;
+
+    content:attr(data-tooltip);
+    color: white;
+    background: black;
+    padding: 8px;
+    border-radius: 10px;
+    
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.2s;
+
+}
+
+.data-tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+} */
+
+
+.tooltip-path {
+    position: relative;
+  }
+  
+  .tooltip-path:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: #454747;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    bottom: 100%; /* Position above the element */
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    white-space: nowrap; /* Prevent tooltip from breaking to a new line */
+    z-index: 1; /* Ensure the tooltip is above the element */
+  }
+  

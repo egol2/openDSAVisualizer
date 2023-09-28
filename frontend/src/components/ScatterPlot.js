@@ -23,7 +23,8 @@ const ScatterPlot = () => {
             .attr('width', w)
             .attr('height', h)
             .style('overflow', 'visible')
-            .style('margin-top', '100px');
+            .style('margin-top', '100px')
+            .style('margin-bottom', '100px');
         //setting up scaling
         const xScale = d3.scaleLinear()
             .domain([0, 100])
@@ -45,13 +46,17 @@ const ScatterPlot = () => {
         
         //setting up axis labaling
         svg.append('text')
-            .attr('x', w/2)
+            .attr('x', w/2 - 10)
             .attr('y', h + 50)
-            .text('x');
+            .text('Hints')
+            .style('font-weight', 'bold');
         svg.append('text')
-            .attr('y', h/2)
-            .attr('x', -50)
-            .text('y');
+            .attr('y', -50)
+            .attr('x', -230)
+            .text('Attemps')
+            .style('font-weight', 'bold')
+            .attr('transform', 'rotate(-90)') // Rotate the text 90 degrees counterclockwise
+            //.attr('dy', '-2em'); // Adjust the vertical positioning of the rotated label
         //setting up svg data
         svg.selectAll()
             .data(data)
@@ -59,8 +64,8 @@ const ScatterPlot = () => {
             .append('circle')
                 .attr('cx', d => xScale(d[0]))
                 .attr('cy', d => yScale(d[1]))
-                .attr('r', 2);
-
+                .attr('r', 5)
+                .style('fill', '#0069c0');
         svg.style('margin-left', '100px');
         svg.style('margin-top', '40px');
     }, [data])

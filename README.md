@@ -15,7 +15,7 @@ If you have ``make`` installed:
 2. To shutdown: ```make backend-stop```
 
 otherwise:
-1. To run: ``docker-compose up backend -d --build``
+1. To run: ``docker compose up backend -d --build``
 2. To shutdown: ``docker compose down``
 
 Navigate to http://localhost:8000
@@ -62,7 +62,7 @@ This is necessary as firefox does not allow self-signing certificates
 - Enter frontend docker:
 ``docker exec -it frontend-1 sh``
 - get ip of docker container:
-``docker inspect \``
-``-f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id``
+``docker inspect \
+-f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_name_or_id>``
 - curl to test backend:
 ``curl -X GET "[insert ip from above command]:8000"``

@@ -1,11 +1,17 @@
 import Input from '@mui/material/Input';
 import React, {useState} from 'react';
 import Button from '@mui/material/Button';
-import '../styles/Upload.css';
 import { TextField } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Box from '@mui/material/Box';
 import { Navigate } from 'react-router-dom';
+
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+
+import '../styles/Upload.css';
+
+import { Outlet, Link } from "react-router-dom";
 
 const Upload = () => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -42,7 +48,7 @@ const Upload = () => {
 
         // Send the file to the server
         try {
-            const response = await fetch('http://172.21.0.2:8000/uploadfile', { // '/upload-endpoint' is your server's endpoint to handle file uploads
+            const response = await fetch('http://localhost:8000/uploadfile', { // '/upload-endpoint' is your server's endpoint to handle file uploads
                 method: 'POST',
                 body: formData,
             });
@@ -63,6 +69,12 @@ const Upload = () => {
   
     return (
         <div className="upload-page-container">
+
+            <Link to="/" className="close-button">
+                <IconButton size="large">
+                    <CloseIcon fontSize="inherit"/>
+                </IconButton>
+            </Link>
             
             <div className='input-file-wrapper'>
                 <Box className='input-box' sx={{ display: 'flex', alignItems: 'center' }}>
@@ -80,9 +92,11 @@ const Upload = () => {
                     <TextField label="Scores"
                     InputLabelProps={{shrink: true,}} type="file" className="input-box" onChange={handleFileChange} />
                 </Box>
-                <Button className='upload-button' size="large" variant="outlined" color="error" onClick={handleUpload}>
-                  Upload
-                </Button>
+                <Link to="/Dashboard">
+                    <Button className='upload-button' size="large" variant="outlined" color="error" onClick={handleUpload}>
+                    Upload
+                    </Button>
+                </Link>
             </div>        
         </div>
     );

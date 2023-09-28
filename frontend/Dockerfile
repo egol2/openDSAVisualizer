@@ -33,13 +33,13 @@ RUN npm install @emotion/react @emotion/styled
 RUN npm install @mui/styled-engine
 RUN npm install d3
 RUN npm install react-router-dom
+
 RUN npm run build
 
+# build contains nginx
+# dev contains only react
 FROM development AS build
 
-
-
-# FROM development as dev-envs
 # RUN <<EOF
 # apt-get update
 # apt-get install -y --no-install-recommends git

@@ -75,6 +75,67 @@ def getTransitionCounts(filename, start, end):
     match_count = 0
     # df.to_csv("transition_counts.csv")
 
+# Get cumulative event count and time duration spent in the Reading state for an individual student
+def getReadingDuration(filename, start, end):
+    read_session_data(filename)
+    match_count = 0
+    duration = 0.0
+    for i in data.index - 1:
+        if not pd.isna(data.iloc[i]['Action Time']):
+            action_time = float(data.iloc[i]['Action Time'][13:-3]) if "Reading time" in data.iloc[i]['Action Time'] else 0
+            if (start <= action_time <= end): 
+                match_count += 1
+                duration += action_time
+    print("Total reading count for student {}: {}".format(data.iloc[i - 1]['User ID'], match_count))
+    print("Total reading duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
+    df = pd.DataFrame()
+    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count)]])])
+    match_count = 0
+    duration = 0
+    print(df)
+    # df.to_csv("reading_duration.csv")
+
+# Get cumulative event count and time duration spent in the Visualization state for an individual student
+def getVisualizationDuration(filename, start, end):
+    read_session_data(filename)
+    match_count = 0
+    duration = 0.0
+    for i in data.index - 1:
+        action_time = float(getDeltaTime(data.iloc[i]['Start Time'], data.iloc[i]['End Time'])) if data.iloc[i]['Event name'] == 'FF event' else 0
+        if (start <= action_time <= end): 
+            match_count += 1
+            duration += action_time
+    print("Total visualization count for student {}: {}".format(data.iloc[i - 1]['User ID'], match_count))
+    print("Total visualization duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
+    df = pd.DataFrame()
+    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count)]])])
+    match_count = 0
+    duration = 0
+    print(df)
+    # df.to_csv("visualization_duration.csv")    
+
+# Get cumulative event count and time duration spent in the Exercises state for an individual student
+def getExercisesDuration(filename, start, end):
+    read_session_data(filename)
+    match_count = 0
+    duration = 0.0
+    for i in data.index - 1:
+        action_time = float(getDeltaTime(data.iloc[i]['Start Time'], data.iloc[i]['End Time'])) if data.iloc[i]['Event name'] == 'PE event' else 0
+        if (start <= action_time <= end): 
+            match_count += 1
+            duration += action_time
+    print("Total exercises count for student {}: {}".format(data.iloc[i - 1]['User ID'], match_count))
+    print("Total exercises duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
+    df = pd.DataFrame()
+    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count)]])])
+    match_count = 0
+    duration = 0
+    print(df)
+    # df.to_csv("exercises_duration.csv")   
+
 # Test and run functions
 test_filename = 'id_15768'
 getTransitionCounts(test_filename, 15, 120)
+getReadingDuration(test_filename, 5, 3600)
+getVisualizationDuration(test_filename, 5, 3600)
+getExercisesDuration(test_filename, 5, 3600)

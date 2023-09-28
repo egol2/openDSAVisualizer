@@ -11,7 +11,7 @@ def read_session_data(filename):
     global df_dict
     df_dict = {elem: pd.DataFrame for elem in users}
     for user in df_dict.keys():
-        df_dict[user] = data[:][data['user ID'] == user]
+        df_dict[user] = data[:][data['User ID'] == user]
     # document event, Window open, Window close, window event, FF event, PE event, Other event
 
 # Gets the delta time end - start assuming start, end are string
@@ -41,13 +41,13 @@ def getTransitionCounts(filename, start, end):
         "ER": 0
     }
     # Consider all document and window events as Reading
-    reading = ["document event ", "window event", "Window open", "Window close"]
+    reading = ["Document event ", "Window event", "Window open", "Window close"]
     visualization = ['FF event']
     exercises = ['PE event']
 
     # Process data
     for i in data.index - 1:
-        current_session = data.iloc[i]['session']
+        current_session = data.iloc[i]['Session']
         # If the event lies within the threshold
         if data.iloc[i]['Event name'] in reading:
             current_state = 'R'
@@ -63,14 +63,14 @@ def getTransitionCounts(filename, start, end):
         previous_session = current_session
 
     # Final value output
-    print("Total transition counts for student {}: {}".format(data.iloc[i - 1]['user ID'], match_count))
-    print("Transition state dictionary for student {}: {}".format(data.iloc[i - 1]['user ID'], transition_counts))
+    print("Total transition counts for student {}: {}".format(data.iloc[i - 1]['User ID'], match_count))
+    print("Transition state dictionary for student {}: {}".format(data.iloc[i - 1]['User ID'], transition_counts))
 
     # Export to csv
     # Create a DataFrame
     df = pd.DataFrame()
     # Append row representing student transition data
-    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['user ID'], str(match_count)]])])
+    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count)]])])
     # Reset match_count
     match_count = 0
     # df.to_csv("transition_counts.csv")

@@ -89,9 +89,6 @@ def getReadingDuration(filename, start, end):
     print("Total reading duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
     df = pd.DataFrame()
     df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count), str(duration)]])])
-    match_count = 0
-    duration = 0
-    print(df)
     # df.to_csv("reading_duration.csv")
     return match_count, duration
 
@@ -109,7 +106,6 @@ def getVisualizationDuration(filename, start, end):
     print("Total visualization duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
     df = pd.DataFrame()
     df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count), str(duration)]])])
-    print(df)
     # df.to_csv("visualization_duration.csv")
     return match_count, duration
 
@@ -127,7 +123,6 @@ def getExercisesDuration(filename, start, end):
     print("Total exercises duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
     df = pd.DataFrame()
     df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count), str(duration)]])])
-    print(df)
     # df.to_csv("exercises_duration.csv")   
     return match_count, duration
 

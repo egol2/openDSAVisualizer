@@ -71,9 +71,8 @@ def getTransitionCounts(filename, start, end):
     df = pd.DataFrame()
     # Append row representing student transition data
     df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count)]])])
-    # Reset match_count
-    match_count = 0
     # df.to_csv("transition_counts.csv")
+    return match_count, transition_counts
 
 # Get cumulative event count and time duration spent in the Reading state for an individual student
 def getReadingDuration(filename, start, end):
@@ -89,11 +88,12 @@ def getReadingDuration(filename, start, end):
     print("Total reading count for student {}: {}".format(data.iloc[i - 1]['User ID'], match_count))
     print("Total reading duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
     df = pd.DataFrame()
-    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count)]])])
+    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count), str(duration)]])])
     match_count = 0
     duration = 0
     print(df)
     # df.to_csv("reading_duration.csv")
+    return match_count, duration
 
 # Get cumulative event count and time duration spent in the Visualization state for an individual student
 def getVisualizationDuration(filename, start, end):
@@ -108,11 +108,10 @@ def getVisualizationDuration(filename, start, end):
     print("Total visualization count for student {}: {}".format(data.iloc[i - 1]['User ID'], match_count))
     print("Total visualization duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
     df = pd.DataFrame()
-    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count)]])])
-    match_count = 0
-    duration = 0
+    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count), str(duration)]])])
     print(df)
-    # df.to_csv("visualization_duration.csv")    
+    # df.to_csv("visualization_duration.csv")
+    return match_count, duration
 
 # Get cumulative event count and time duration spent in the Exercises state for an individual student
 def getExercisesDuration(filename, start, end):
@@ -127,11 +126,10 @@ def getExercisesDuration(filename, start, end):
     print("Total exercises count for student {}: {}".format(data.iloc[i - 1]['User ID'], match_count))
     print("Total exercises duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
     df = pd.DataFrame()
-    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count)]])])
-    match_count = 0
-    duration = 0
+    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count), str(duration)]])])
     print(df)
     # df.to_csv("exercises_duration.csv")   
+    return match_count, duration
 
 # Test and run functions
 test_filename = 'id_15768'

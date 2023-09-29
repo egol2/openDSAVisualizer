@@ -9,7 +9,6 @@ import { Navigate } from 'react-router-dom';
 import StateGraph from '../components/StateGraph';
 import ScatterPlot from '../components/ScatterPlot';
 import Item from '../components/Item';
-
 import { Outlet, Link } from "react-router-dom";
 
 const Dashboard = () => {

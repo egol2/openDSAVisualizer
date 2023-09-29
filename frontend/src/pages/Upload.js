@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import '../styles/Upload.css';
 import { Outlet, Link } from "react-router-dom";
-
+import Header from '../components/Header';
 const Upload = () => {
     const [exFile, setExFile] = useState(null);
     const [intFile, setIntFile] = useState(null);
@@ -71,7 +71,7 @@ const Upload = () => {
   
     return (
         <div className="upload-page-container">
-
+            
             <Link to="/" className="close-button">
                 <IconButton size="large">
                     <CloseIcon fontSize="inherit"/>

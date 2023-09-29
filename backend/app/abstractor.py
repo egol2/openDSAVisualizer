@@ -307,7 +307,7 @@ def abstract(file_name):
             curr = row
         file_csv = StringIO(result.getvalue())
         final = pd.read_csv(file_csv)
-        return pd.DataFrame(final)
+        return final
 
                 
             

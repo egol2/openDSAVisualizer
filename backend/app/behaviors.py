@@ -3,10 +3,9 @@ import pandas as pd
 from datetime import datetime as dt, timedelta
 
 # Reads Interactions file generated from abstracing_script with suffix _merged_result_unannotated.csv
-def read_session_data(filename):
+def read_session_data(input_data):
     global data
-    print("working directory", os.getcwd())
-    data = pd.read_csv(filename + "_merged_result_unannotated.csv")
+    data = input_data
     users = data['User ID'].unique()
     global df_dict
     df_dict = {elem: pd.DataFrame for elem in users}
@@ -22,8 +21,8 @@ def getDeltaTime(start, end):
 
 # Generates a dictionary of transition counts between the three states
 # R = Reading, V = Visualizations, E = Exercises
-def getTransitionCounts(filename, start, end):
-    read_session_data(filename)
+def getTransitionCounts(input_data):
+    read_session_data(input_data)
 
     # match_count is total number of transitions
     match_count = 0
@@ -49,11 +48,11 @@ def getTransitionCounts(filename, start, end):
     for i in data.index - 1:
         current_session = data.iloc[i]['Session']
         # If the event lies within the threshold
-        if data.iloc[i]['Event name'] in reading:
+        if data.iloc[i]['Event Name'] in reading:
             current_state = 'R'
-        elif data.iloc[i]['Event name'] in visualization:
+        elif data.iloc[i]['Event Name'] in visualization:
             current_state = 'V'
-        elif data.iloc[i]['Event name'] in exercises:
+        elif data.iloc[i]['Event Name'] in exercises:
             current_state = 'E'
         if previous_state is not None and current_state != previous_state:
             transition_counts[previous_state + current_state] += 1
@@ -81,7 +80,7 @@ def getReadingDuration(filename, start, end):
     duration = 0.0
     for i in data.index - 1:
         if not pd.isna(data.iloc[i]['Action Time']):
-            action_time = float(data.iloc[i]['Action Time'][13:-3]) if "Reading time" in data.iloc[i]['Action Time'] else 0
+            action_time = float(data.iloc[i]['Action Time'][13:-3]) if "Reading Time" in data.iloc[i]['Action Time'] else 0
             if (start <= action_time <= end): 
                 match_count += 1
                 duration += action_time
@@ -98,7 +97,7 @@ def getVisualizationDuration(filename, start, end):
     match_count = 0
     duration = 0.0
     for i in data.index - 1:
-        action_time = float(getDeltaTime(data.iloc[i]['Start Time'], data.iloc[i]['End Time'])) if data.iloc[i]['Event name'] == 'FF event' else 0
+        action_time = float(getDeltaTime(data.iloc[i]['Start Time'], data.iloc[i]['End Time'])) if data.iloc[i]['Event Name'] == 'FF event' else 0
         if (start <= action_time <= end): 
             match_count += 1
             duration += action_time
@@ -115,7 +114,7 @@ def getExercisesDuration(filename, start, end):
     match_count = 0
     duration = 0.0
     for i in data.index - 1:
-        action_time = float(getDeltaTime(data.iloc[i]['Start Time'], data.iloc[i]['End Time'])) if data.iloc[i]['Event name'] == 'PE event' else 0
+        action_time = float(getDeltaTime(data.iloc[i]['Start Time'], data.iloc[i]['End Time'])) if data.iloc[i]['Event Name'] == 'PE event' else 0
         if (start <= action_time <= end): 
             match_count += 1
             duration += action_time
@@ -127,8 +126,8 @@ def getExercisesDuration(filename, start, end):
     return match_count, duration
 
 # Test and run functions
-test_filename = 'id_15768'
-getTransitionCounts(test_filename, 15, 120)
-getReadingDuration(test_filename, 5, 3600)
-getVisualizationDuration(test_filename, 5, 3600)
-getExercisesDuration(test_filename, 5, 3600)
+# test_filename = 'id_15768'
+# getTransitionCounts(test_filename, 15, 120)
+# getReadingDuration(test_filename, 5, 3600)
+# getVisualizationDuration(test_filename, 5, 3600)
+# getExercisesDuration(test_filename, 5, 3600)

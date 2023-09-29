@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
-from . import abstractor, files
+from . import abstractor, files, behaviors
 
 app = FastAPI()
 
@@ -62,17 +62,29 @@ async def upload_exercises(file: UploadFile):
 
 @app.get("/student/{id}")
 async def student_info(id):
-    # Check if .json file of student exists
+    # Check if .json file of student exists and return it
+    full_json_path = root_path + "data/" + str(id) + ".json"
+    if os.path.isfile(full_json_path):
+        json_file = open(full_json_path, "r")
+        json = json_file.readlines()
+        return json
 
     # Check if .log file of student exists and process
     full_item_path = root_path + "data/" + str(id) + ".log"
-    if os.path.isfile(full_item_path):
-        result = abstractor.abstract(full_item_path)
-        
-        #valA = behaviors.a(result)
-        #valB = behaviors.b(result)
-        # write the dataframe's values into a .json accordingly
-    else:
+    if not os.path.isfile(full_item_path):
         raise HTTPException(status_code=404, detail="Student ID not found")
     
-    return {"status": "read!"}
+    data = abstractor.abstract(full_item_path)
+        
+    #valA = behaviors.a(data)
+    #valB = behaviors.b(data)
+    (total_transitions, transitions) = behaviors.getTransitionCounts(data)
+    
+    # Writing the resultant values into a .json
+    result = {
+        "id": id,
+        "total_transitions": total_transitions,
+        "transitions": transitions
+    }
+    
+    return result

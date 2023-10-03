@@ -62,14 +62,14 @@ def getTransitionCounts(input_data):
         previous_session = current_session
 
     # Final value output
-    print("Total transition counts for student {}: {}".format(data.iloc[i - 1]['User ID'], match_count))
-    print("Transition state dictionary for student {}: {}".format(data.iloc[i - 1]['User ID'], transition_counts))
+    print("Total transition counts for student {}: {}".format(data.iloc[0]['User ID'], match_count))
+    print("Transition state dictionary for student {}: {}".format(data.iloc[0]['User ID'], transition_counts))
 
     # Export to csv
     # Create a DataFrame
     df = pd.DataFrame()
     # Append row representing student transition data
-    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count)]])])
+    df = pd.concat([df, pd.DataFrame([[data.iloc[0]['User ID'], str(match_count)]])])
     # df.to_csv("transition_counts.csv")
     return match_count, transition_counts
 
@@ -84,10 +84,10 @@ def getReadingDuration(filename, start, end):
             if (start <= action_time <= end): 
                 match_count += 1
                 duration += action_time
-    print("Total reading count for student {}: {}".format(data.iloc[i - 1]['User ID'], match_count))
-    print("Total reading duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
+    print("Total reading count for student {}: {}".format(data.iloc[0]['User ID'], match_count))
+    print("Total reading duration for student {}: {}".format(data.iloc[0]['User ID'], duration))
     df = pd.DataFrame()
-    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count), str(duration)]])])
+    df = pd.concat([df, pd.DataFrame([[data.iloc[0]['User ID'], str(match_count), str(duration)]])])
     # df.to_csv("reading_duration.csv")
     return match_count, duration
 
@@ -101,10 +101,10 @@ def getVisualizationDuration(filename, start, end):
         if (start <= action_time <= end): 
             match_count += 1
             duration += action_time
-    print("Total visualization count for student {}: {}".format(data.iloc[i - 1]['User ID'], match_count))
-    print("Total visualization duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
+    print("Total visualization count for student {}: {}".format(data.iloc[0]['User ID'], match_count))
+    print("Total visualization duration for student {}: {}".format(data.iloc[0]['User ID'], duration))
     df = pd.DataFrame()
-    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count), str(duration)]])])
+    df = pd.concat([df, pd.DataFrame([[data.iloc[0]['User ID'], str(match_count), str(duration)]])])
     # df.to_csv("visualization_duration.csv")
     return match_count, duration
 
@@ -118,16 +118,21 @@ def getExercisesDuration(filename, start, end):
         if (start <= action_time <= end): 
             match_count += 1
             duration += action_time
-    print("Total exercises count for student {}: {}".format(data.iloc[i - 1]['User ID'], match_count))
-    print("Total exercises duration for student {}: {}".format(data.iloc[i - 1]['User ID'], duration))
+    print("Total exercises count for student {}: {}".format(data.iloc[0]['User ID'], match_count))
+    print("Total exercises duration for student {}: {}".format(data.iloc[0]['User ID'], duration))
     df = pd.DataFrame()
-    df = pd.concat([df, pd.DataFrame([[data.iloc[i - 1]['User ID'], str(match_count), str(duration)]])])
+    df = pd.concat([df, pd.DataFrame([[data.iloc[0]['User ID'], str(match_count), str(duration)]])])
     # df.to_csv("exercises_duration.csv")   
     return match_count, duration
 
 # Test and run functions
-# test_filename = 'id_15768'
-# getTransitionCounts(test_filename, 15, 120)
-# getReadingDuration(test_filename, 5, 3600)
-# getVisualizationDuration(test_filename, 5, 3600)
-# getExercisesDuration(test_filename, 5, 3600)
+# columns=["Session", "User ID", "Inst Book", "Event Name", "Event Description", "Start Time", "End Time", "Action Time", "Exercise Type", "Number of Events"]
+# test_row = pd.DataFrame(data=[[1,15768,1106,"document event",
+#                                "User loaded the 00.01 How to Use this System module",
+#                                dt.strptime("2021-08-22 18:12:07", "%Y-%m-%d %H:%M:%S"),
+#                                dt.strptime("2021-08-22 18:12:07", "%Y-%m-%d %H:%M:%S"),"","",1]], 
+#                                columns=columns)
+# getTransitionCounts(test_row)
+# getReadingDuration(test_row, 5, 3600)
+# getVisualizationDuration(test_row, 5, 3600)
+# getExercisesDuration(test_row, 5, 3600)

@@ -49,18 +49,6 @@ const Dashboard = () => {
         // Add more student data here
       ];
 
-    
-    const StudentList = ({ students, onStudentClick }) => {
-        return (
-            <ul>
-            {students.map((student) => (
-                <li key={student.id} onClick={() => onStudentClick(student)}>
-                {student.name}
-                </li>
-            ))}
-            </ul>
-        );
-    };
 
     const getStudents = async () => {
         console.log("HELLOOOO");

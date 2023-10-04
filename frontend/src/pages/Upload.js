@@ -50,7 +50,7 @@ const Upload = () => {
             }
         }
     };
-    const handleUpload = () => {
+    const handleUpload = async () => {
       // Handle file upload logic here, e.g., send the file to a server.
         console.log('Uploading file:', exFile);
         console.log('Uploading file:', intFile);
@@ -95,12 +95,12 @@ const Upload = () => {
                         <TextField label="Scores"
                         InputLabelProps={{shrink: true,}} type="file" className="input-box" onChange={(event) => handleFileChange(event, setScoreFile)} />
                     </Box>
-                    {/* <Link to="/Dashboard">
-                        
-                    </Link> */}
-                    <Button className='upload-button' size="large" variant="outlined" color="error" onClick={handleUpload}>
-                        Upload
-                    </Button>
+                    <Link to="/Dashboard">
+                        <Button className='upload-button' size="large" variant="outlined" color="error" onClick={handleUpload}>
+                            Upload
+                        </Button>
+                    </Link>
+                    
                 
                 
             </div>        

@@ -1,5 +1,5 @@
 import Input from '@mui/material/Input';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import '../styles/Dashboard.css';
 import { TextField } from '@mui/material';
@@ -48,7 +48,42 @@ const Dashboard = () => {
         { id: 6, name: 'Student 6', grade: 'A' },
         // Add more student data here
       ];
+
     
+    const StudentList = ({ students, onStudentClick }) => {
+        return (
+            <ul>
+            {students.map((student) => (
+                <li key={student.id} onClick={() => onStudentClick(student)}>
+                {student.name}
+                </li>
+            ))}
+            </ul>
+        );
+    };
+
+    const getStudents = async () => {
+        console.log("HELLOOOO");
+        try {
+            const response = await fetch('http://localhost:8000/scores');
+            
+            if (response.ok) {
+                console.log('Get student list successfully');
+                console.log(response);
+            } else {
+                console.error('Failed to get students:', await response.text());
+            }
+            
+
+        } catch (error) {
+            console.error('Failed to get students:', error);
+        }
+    }
+
+    useEffect( () => {
+        getStudents();
+    }, []);
+
     const fakeFrequency = [8, 1, 10, 3, 4, 5]; //fake frequency for the state graph
     return (
         <div>

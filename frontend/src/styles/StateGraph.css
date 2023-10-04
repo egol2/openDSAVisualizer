@@ -68,6 +68,10 @@
 .tooltip-path {
     position: relative;
   }
+
+  .state-graph {
+    margin-left: 450px;
+  }
   
   .tooltip-path:hover::before {
     content: attr(data-tooltip);

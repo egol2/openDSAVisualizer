@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect} from 'react';
 import * as d3 from 'd3';
+import '../styles/ScatterPlot.css';
 const ScatterPlot = () => {
     const [data] = useState([
         [90,20],
@@ -70,7 +71,7 @@ const ScatterPlot = () => {
         svg.style('margin-top', '40px');
     }, [data])
     return (
-        <div>
+        <div className="scatter-plot">
             <svg ref={svgRef}></svg>
         </div>
     );

@@ -10,7 +10,8 @@ import StateGraph from '../components/StateGraph';
 import ScatterPlot from '../components/ScatterPlot';
 import Item from '../components/Item';
 import { Outlet, Link } from "react-router-dom";
-
+import StudentList from '../components/StudentList';
+import StudentDetail from '../components/StudentDetail';
 const Dashboard = () => {
     
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -25,36 +26,28 @@ const Dashboard = () => {
     //     setNavigateToUpload(true);
     // };
 
-    const StudentDetail = ({ student }) => {
-        return (
-          <div>
-            <h2>Student ID: {student.id}</h2>
-            <p>Grade: {student.grade}</p>
-          </div>
-        );
-    };
-
 
     const studentsData = [
         { id: 1, name: 'Student 1', grade: 'A' },
         { id: 2, name: 'Student 2', grade: 'B' },
         { id: 3, name: 'Student 3', grade: 'C' },
         { id: 4, name: 'Student 4', grade: 'D' },
+        { id: 5, name: 'Student 5', grade: 'C' },
+        { id: 6, name: 'Student 6', grade: 'A' },
+        { id: 3, name: 'Student 3', grade: 'C' },
+        { id: 4, name: 'Student 4', grade: 'D' },
+        { id: 5, name: 'Student 5', grade: 'C' },
+        { id: 6, name: 'Student 6', grade: 'A' },
+        { id: 3, name: 'Student 3', grade: 'C' },
+        { id: 4, name: 'Student 4', grade: 'D' },
+        { id: 5, name: 'Student 5', grade: 'C' },
+        { id: 6, name: 'Student 6', grade: 'A' },
+        { id: 3, name: 'Student 3', grade: 'C' },
+        { id: 4, name: 'Student 4', grade: 'D' },
+        { id: 5, name: 'Student 5', grade: 'C' },
+        { id: 6, name: 'Student 6', grade: 'A' },
         // Add more student data here
       ];
-
-    
-    const StudentList = ({ students, onStudentClick }) => {
-        return (
-            <ul>
-            {students.map((student) => (
-                <li key={student.id} onClick={() => onStudentClick(student)}>
-                {student.name}
-                </li>
-            ))}
-            </ul>
-        );
-    };
     
     const fakeFrequency = [8, 1, 10, 3, 4, 5]; //fake frequency for the state graph
     return (

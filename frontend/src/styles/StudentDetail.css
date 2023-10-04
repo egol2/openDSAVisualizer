@@ -1,0 +1,26 @@
+.student-detail-box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border: 2px solid #f0f0f0;
+    padding: 10px;
+    margin-top: -570px;
+    margin-left: 450px;
+    background-color: #f0f0f0;
+    max-width: 600px; 
+  }
+
+  .user-picture {
+    font-size: 24px; 
+    margin-right: 10px; 
+  }
+  
+  .student-id-box {
+    flex: auto; 
+  }
+  
+  .student-grade-box {
+    background-color: #d6d5d5;
+    padding: 5px 50px;
+    border-radius: 5px;
+  }

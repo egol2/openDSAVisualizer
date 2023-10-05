@@ -10,11 +10,15 @@ import IconButton from '@mui/material/IconButton';
 import '../styles/Upload.css';
 import { Outlet, Link } from "react-router-dom";
 import Header from '../components/Header';
+import { useNavigate } from "react-router-dom";
+
+
 const Upload = () => {
     const [exFile, setExFile] = useState(null);
     const [intFile, setIntFile] = useState(null);
     const [scoreFile, setScoreFile] = useState(null);
 
+    const navigate = useNavigate();
 
     const handleFileChange = (event, setter) => {
       const file = event.target.files[0];
@@ -50,7 +54,8 @@ const Upload = () => {
             }
         }
     };
-    const handleUpload = async () => {
+    const HandleUpload = async () => {
+
       // Handle file upload logic here, e.g., send the file to a server.
         console.log('Uploading file:', exFile);
         console.log('Uploading file:', intFile);
@@ -64,9 +69,12 @@ const Upload = () => {
         formData.append('scorefile', scoreFile);
 
         // Send the file to the server
-        sendFileToEndpoint(formData.get('exfile'), '/upload/exercises');
-        sendFileToEndpoint(formData.get('intfile'), '/upload/interactions');
-        sendFileToEndpoint(formData.get('scorefile'), '/upload/scores');
+        await sendFileToEndpoint(formData.get('exfile'), '/upload/exercises');
+        await sendFileToEndpoint(formData.get('intfile'), '/upload/interactions');
+        await sendFileToEndpoint(formData.get('scorefile'), '/upload/scores');
+
+        navigate("/");
+
     };
   
     return (
@@ -95,15 +103,11 @@ const Upload = () => {
                         <TextField label="Scores"
                         InputLabelProps={{shrink: true,}} type="file" className="input-box" onChange={(event) => handleFileChange(event, setScoreFile)} />
                     </Box>
-                    <Link to="/Dashboard">
-                        <Button className='upload-button' size="large" variant="outlined" color="error" onClick={handleUpload}>
-                            Upload
-                        </Button>
-                    </Link>
-                    
+                    <Button className='upload-button' size="large" variant="outlined" color="error" onClick={HandleUpload}>
+                        Upload
+                    </Button>
                 
-                
-            </div>        
+            </div>
         </div>
     );
   }

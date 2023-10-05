@@ -73,14 +73,14 @@ const Upload = () => {
         await sendFileToEndpoint(formData.get('intfile'), '/upload/interactions');
         await sendFileToEndpoint(formData.get('scorefile'), '/upload/scores');
 
-        navigate("/");
+        navigate("dashboard");
 
     };
   
     return (
         <div className="upload-page-container">
             
-            <Link to="/" className="close-button">
+            <Link to="dashboard" className="close-button">
                 <IconButton size="large">
                     <CloseIcon fontSize="inherit"/>
                 </IconButton>

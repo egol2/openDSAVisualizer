@@ -75,7 +75,7 @@ const Dashboard = () => {
     const fakeFrequency = [8, 1, 10, 3, 4, 5]; //fake frequency for the state graph
     return (
         <div>
-            <Link to="/Upload"><Button>Upload</Button></Link>
+            <Link to="/"><Button>Upload</Button></Link>
             
             <div className='dashboard-container'>
                 <StudentList students={studentsData} onStudentClick={handleStudentClick}/>

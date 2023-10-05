@@ -12,8 +12,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route index element={<Dashboard />} />
-          <Route path="upload" element={<Upload />} />
+          <Route index element={<Upload />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="*" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>

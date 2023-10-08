@@ -75,15 +75,29 @@ const Dashboard = () => {
     const fakeFrequency = [8, 1, 10, 3, 4, 5]; //fake frequency for the state graph
     return (
         <div>
-            <Link to="/"><Button>Upload</Button></Link>
-            
-            <div className='dashboard-container'>
-                <StudentList students={studentsData} onStudentClick={handleStudentClick}/>
-                {selectedStudent && <StudentDetail student={selectedStudent} />}
-                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }} >
-                    <StateGraph fakeFrequency={fakeFrequency}/>
-                    <ScatterPlot/>                         
-                </Box>
+            <div className="dashboard-header">
+                Dashboard
+                <div className="upload-button-container">
+                    <Link to="/"><Button className="back-to-upload-button">Back to Upload</Button></Link>
+                </div>
+            </div>
+            <div className="dashboard-container">
+                <div className= "column1">
+                    <StudentList students={studentsData} onStudentClick={handleStudentClick}/>
+                </div>
+                <div className= "column2">
+                    {selectedStudent && <StudentDetail student={selectedStudent} />}
+                    <div className="graph-container">
+                        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }} >
+                            <div className="row1">
+                                <StateGraph fakeFrequency={fakeFrequency}/>
+                            </div>
+                            <div className="row2">
+                                <ScatterPlot/>  
+                            </div>                       
+                        </Box>
+                    </div>
+                </div>
                 
                 
             </div>

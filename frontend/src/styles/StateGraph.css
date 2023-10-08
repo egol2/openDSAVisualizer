@@ -70,7 +70,9 @@
   }
 
   .state-graph {
-    margin-left: 450px;
+    margin-left: 10px;
+    display: grid;
+    place-items: center;
   }
   
   .tooltip-path:hover::before {

@@ -1,13 +1,60 @@
 .back-to-upload-button {
     color: white;
+    font-weight: bold;
 }
 
-.dashboard-header, .back-to-upload-button {
+.column1 {
+    padding: 10px;
+    margin-top: 20px
+  }
+
+  .column2 {
+    grid-column: 2;
+    margin-top: 20px
+    
+  }
+  .dashboard-container {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: auto auto;
+    grid-gap: 20px;
+}
+
+.graph-container {
+    background-color: rgba(203, 201, 201, 0.655); 
+    padding: 10px;
+    margin: 10px;
+    width: 95%;
+    max-height: 70vh; 
+    overflow-y: auto; 
+    display: grid;
+    grid-template-rows: auto auto;
+}
+
+.row1,
+.row2 {
+    background-color: rgba(242, 242, 242, 0.991);
+    padding: 10px; 
+    margin-bottom: 10px; 
+    width: 97%
+}
+
+.upload-button-container {
+    background-color: rgb(80, 78, 78);
+    padding: 10px;
+    margin: 10px; 
+    display: flex;
+    align-items: center; 
+}
+
+.dashboard-header {
     display: flex;
     justify-content: space-between;
-    background-color: rgb(0, 0, 0);
-    color:rgb(255, 255, 255);
+    background-color: rgba(213, 212, 212, 0.703);
+    color:rgb(80, 78, 78);
+    font-weight: bold;
     font-size: 25px;
-    padding: 0 10px;
-    height: 140px;
+    padding: 0 30px;
+    height: 10%;
+    align-items: center;
 }

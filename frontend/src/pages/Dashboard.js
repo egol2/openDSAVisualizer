@@ -87,7 +87,7 @@ const Dashboard = () => {
     return (
         <div>
             <div className="dashboard-header">
-                Dashboard
+                DASHBOARD
                 <div className="upload-button-container">
                     <Link to="/"><Button sx={styleObj}>Back to Upload</Button></Link>
                 </div>

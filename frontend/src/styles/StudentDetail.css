@@ -20,4 +20,5 @@
   .student-grade-box {
     background-color: rgba(159, 153, 153, 0.6);
     padding: 5px 50px;
+    font-weight: bold;
   }

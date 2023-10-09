@@ -1,8 +1,3 @@
-.back-to-upload-button {
-    color: white;
-    font-weight: bold;
-}
-
 .column1 {
     padding: 10px;
     margin-top: 20px
@@ -23,7 +18,7 @@
 .graph-container {
     background-color: rgba(203, 201, 201, 0.655); 
     padding-top: 10px;
-    padding-left: 30px;
+    padding-left: 20px;
     margin: 10px;
     width: 95%;
     max-height: 70vh; 
@@ -38,13 +33,14 @@
     background-color: rgba(242, 242, 242, 0.991);
     padding: 10px; 
     margin-bottom: 10px; 
-    width: 97%;
+    width: 95%;
 }
 
 .upload-button-container {
     background-color: rgb(80, 78, 78);
     padding: 10px;
     margin: 10px; 
+    margin-right: 80px;
     display: flex;
     align-items: center; 
 }
@@ -56,7 +52,8 @@
     color:rgb(80, 78, 78);
     font-weight: bold;
     font-size: 25px;
-    padding: 0 30px;
+    padding: 0 5vh;
     height: 10%;
     align-items: center;
+    width: 100%;
 }

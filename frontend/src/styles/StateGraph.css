@@ -70,7 +70,7 @@
   }
 
   .state-graph {
-    margin-left: 10px;
+    
     display: grid;
     place-items: center;
   }

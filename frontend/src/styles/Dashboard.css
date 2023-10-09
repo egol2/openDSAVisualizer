@@ -22,13 +22,15 @@
 
 .graph-container {
     background-color: rgba(203, 201, 201, 0.655); 
-    padding: 10px;
+    padding-top: 10px;
+    padding-left: 30px;
     margin: 10px;
     width: 95%;
     max-height: 70vh; 
     overflow-y: auto; 
     display: grid;
     grid-template-rows: auto auto;
+    
 }
 
 .row1,
@@ -36,7 +38,7 @@
     background-color: rgba(242, 242, 242, 0.991);
     padding: 10px; 
     margin-bottom: 10px; 
-    width: 97%
+    width: 97%;
 }
 
 .upload-button-container {

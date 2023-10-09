@@ -74,6 +74,7 @@ const Dashboard = () => {
 
     const styleObj = {
         color: "white",
+        fontWeight: "bold",
         "&:hover": {
           backgroundColor: "rgba(213, 212, 212, 0.703)"
         },

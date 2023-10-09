@@ -72,13 +72,23 @@ const Dashboard = () => {
         getStudents();
     }, []);
 
+    const styleObj = {
+        color: "white",
+        "&:hover": {
+          backgroundColor: "rgba(213, 212, 212, 0.703)"
+        },
+        "&:active": {
+          backgroundColor: "rgb(80, 78, 78)"
+        }
+      };
+
     const fakeFrequency = [8, 1, 10, 3, 4, 5]; //fake frequency for the state graph
     return (
         <div>
             <div className="dashboard-header">
                 Dashboard
                 <div className="upload-button-container">
-                    <Link to="/"><Button className="back-to-upload-button">Back to Upload</Button></Link>
+                    <Link to="/"><Button sx={styleObj}>Back to Upload</Button></Link>
                 </div>
             </div>
             <div className="dashboard-container">

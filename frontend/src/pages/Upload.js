@@ -1,14 +1,12 @@
-import Input from '@mui/material/Input';
 import React, {useState} from 'react';
 import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Box from '@mui/material/Box';
-import { Navigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import '../styles/Upload.css';
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from '../components/Header';
 import { useNavigate } from "react-router-dom";
 
@@ -42,12 +40,6 @@ const Upload = () => {
                     console.error('File upload failed:', await response.text());
                 }
                 
-                if (endpoint === '/upload/scores') {
-                    const res = await fetch('http://localhost:8000/scores', {
-                        method: 'GET',
-                    });
-                }
-                
 
             } catch (error) {
                 console.error('Error uploading the file:', error);
@@ -72,11 +64,40 @@ const Upload = () => {
         await sendFileToEndpoint(formData.get('exfile'), '/upload/exercises');
         await sendFileToEndpoint(formData.get('intfile'), '/upload/interactions');
         await sendFileToEndpoint(formData.get('scorefile'), '/upload/scores');
-
-        navigate("dashboard");
-
+        await getStudents()
+            .then(data => {
+                // Handle the data here
+                //console.log(data);
+            
+                // Once you have the data, you can navigate to the "dashboard" page
+                navigate("dashboard", { state: data }); // Pass the data as a parameter
+            })
+            .catch(error => {
+                // Handle errors here
+                console.error(error);
+            });
     };
   
+    const getStudents = async () => {
+        console.log("HELLOOOO");
+        try {
+            const response = await fetch('http://localhost:8000/scores');
+            
+            if (response.ok) {
+                console.log('Get student list successfully');
+                console.log(response);
+                const data = await response.json();
+                console.log(data);
+            } else {
+                console.error('Failed to get students:', await response.text());
+            }
+            
+
+        } catch (error) {
+            console.error('Failed to get students:', error);
+        }
+    }
+
     return (
         <div className="upload-page-container">
             

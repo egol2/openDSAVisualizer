@@ -9,10 +9,10 @@ const StudentDetail = ({ student }) => {
           <PersonIcon fontSize="large" />  
         </div>
         <div className="student-id-box">
-            <h2>Student ID: {student.id}</h2>
+            <h2>Student ID: {student.user_id}</h2>
         </div>
         <div className="student-grade-box">
-            <p>Grade: {student.grade}</p>
+            <p>Grade: {student.Grade}</p>
         </div>
       </div>
     );

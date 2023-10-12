@@ -78,25 +78,7 @@ const Upload = () => {
             });
     };
   
-    const getStudents = async () => {
-        console.log("HELLOOOO");
-        try {
-            const response = await fetch('http://localhost:8000/scores');
-            
-            if (response.ok) {
-                console.log('Get student list successfully');
-                console.log(response);
-                const data = await response.json();
-                console.log(data);
-            } else {
-                console.error('Failed to get students:', await response.text());
-            }
-            
-
-        } catch (error) {
-            console.error('Failed to get students:', error);
-        }
-    }
+ 
 
     return (
         <div className="upload-page-container">

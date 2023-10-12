@@ -7,12 +7,7 @@ import ScatterPlot from '../components/ScatterPlot';
 import { Link } from "react-router-dom";
 import StudentList from '../components/StudentList';
 import StudentDetail from '../components/StudentDetail';
-import {useLocation} from 'react-router-dom';
 const Dashboard = () => {
-    const location = useLocation();
-    const data = location.state;
-
-    console.log(data); 
 
     const handleStudentClick = (student) => {
         setSelectedStudent(student);
@@ -20,6 +15,27 @@ const Dashboard = () => {
 
     const [selectedStudent, setSelectedStudent] = useState(null);
 
+
+    const getStudents = async () => {
+        console.log("HELLOOOO");
+        try {
+            const response = await fetch('http://localhost:8000/scores');
+            
+            if (response.ok) {
+                console.log('Get student list successfully');
+                console.log(response);
+                const data = await response.json();
+                console.log(data);
+            } else {
+                console.error('Failed to get students:', await response.text());
+            }
+            
+
+        } catch (error) {
+            console.error('Failed to get students:', error);
+        }
+    }
+    useEffect(getStudents(), []); //run getStudents() as soon as page loads. [] means runs it once when page loads
 
     // const studentsData = [
     //     { id: 1, name: 'Student 1', grade: 'A' },

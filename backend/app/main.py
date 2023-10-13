@@ -3,6 +3,7 @@ from typing import Annotated
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import glob
+import json
 
 from . import abstractor, files, behaviors
 
@@ -95,9 +96,9 @@ async def student_info(id):
     # Check if .json file of student exists and return it
     full_json_path = "/app/app/data/" + str(id) + ".json"
     if os.path.isfile(full_json_path):
-        json_file = open(full_json_path, "r")
-        json = json_file.read()
-        return json
+        with open(full_json_path, "r") as json_file:
+            data = json.load(json_file)
+            return data
 
     # Check if .log file of student exists and process
     full_item_path = "/app/app/data/" + str(id) + ".log"
@@ -118,8 +119,11 @@ async def student_info(id):
     }
 
     # Writing the .json
-    json_file = open(full_json_path, "w")
-    json_file.write(str(result))
-    json_file.close()
+    # json_file = open(full_json_path, "w")
+    # json.dump(result, json_file)
+    # json_file.close()
+
+    with open(full_json_path, "w") as json_file:
+        json.dump(result, json_file)
     
     return result

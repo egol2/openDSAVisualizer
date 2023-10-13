@@ -64,22 +64,11 @@ const Upload = () => {
         await sendFileToEndpoint(formData.get('exfile'), '/upload/exercises');
         await sendFileToEndpoint(formData.get('intfile'), '/upload/interactions');
         await sendFileToEndpoint(formData.get('scorefile'), '/upload/scores');
-        await getStudents()
-            .then(data => {
-                // Handle the data here
-                //console.log(data);
-            
-                // Once you have the data, you can navigate to the "dashboard" page
-                navigate("dashboard", { state: data }); // Pass the data as a parameter
-            })
-            .catch(error => {
-                // Handle errors here
-                console.error(error);
-            });
+
+        // Once you have the data, you can navigate to the "dashboard" page
+        navigate("dashboard"); // Pass the data as a parameter
     };
   
- 
-
     return (
         <div className="upload-page-container">
             

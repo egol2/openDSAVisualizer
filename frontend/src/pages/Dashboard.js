@@ -7,59 +7,80 @@ import ScatterPlot from '../components/ScatterPlot';
 import { Link } from "react-router-dom";
 import StudentList from '../components/StudentList';
 import StudentDetail from '../components/StudentDetail';
+import { useEffect } from 'react';
+
+
 const Dashboard = () => {
 
     const handleStudentClick = (student) => {
         setSelectedStudent(student);
+        getStudentInfo(student.user_id)
     };
 
     const [selectedStudent, setSelectedStudent] = useState(null);
-
+    const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingStudent, setIsLoadingStudent] = useState(true);
+    const [studentsData, setStudentsData] = useState([]);
+    const [studentInfoData, setStudentInfoData] = useState({});
 
     const getStudents = async () => {
-        console.log("HELLOOOO");
+        // console.log("HELLOOOO");
+        setIsLoading(true);
         try {
             const response = await fetch('http://localhost:8000/scores');
             
             if (response.ok) {
                 console.log('Get student list successfully');
-                console.log(response);
                 const data = await response.json();
+                setStudentsData(data);
+                
+                console.log("Student Data\n:");
                 console.log(data);
+
             } else {
                 console.error('Failed to get students:', await response.text());
-            }
+            } 
             
-
         } catch (error) {
             console.error('Failed to get students:', error);
+        } finally {
+            setIsLoading(false);
         }
     }
-    useEffect(getStudents(), []); //run getStudents() as soon as page loads. [] means runs it once when page loads
 
-    // const studentsData = [
-    //     { id: 1, name: 'Student 1', grade: 'A' },
-    //     { id: 2, name: 'Student 2', grade: 'B' },
-    //     { id: 3, name: 'Student 3', grade: 'C' },
-    //     { id: 4, name: 'Student 4', grade: 'D' },
-    //     { id: 5, name: 'Student 5', grade: 'C' },
-    //     { id: 6, name: 'Student 6', grade: 'A' },
-    //     { id: 3, name: 'Student 3', grade: 'C' },
-    //     { id: 4, name: 'Student 4', grade: 'D' },
-    //     { id: 5, name: 'Student 5', grade: 'C' },
-    //     { id: 6, name: 'Student 6', grade: 'A' },
-    //     { id: 3, name: 'Student 3', grade: 'C' },
-    //     { id: 4, name: 'Student 4', grade: 'D' },
-    //     { id: 5, name: 'Student 5', grade: 'C' },
-    //     { id: 6, name: 'Student 6', grade: 'A' },
-    //     { id: 3, name: 'Student 3', grade: 'C' },
-    //     { id: 4, name: 'Student 4', grade: 'D' },
-    //     { id: 5, name: 'Student 5', grade: 'C' },
-    //     { id: 6, name: 'Student 6', grade: 'A' },
-    //     // Add more student data here
-    //   ];
+    const getStudentInfo = async (id) => {
+        setIsLoadingStudent(true);
+        try {
+            const response = await fetch(`http://localhost:8000/student/${id}`);
+            
+            if (response.ok) {
+                console.log('Get student info successfully');
+                const data = await response.json();
+                setStudentInfoData(data);
+                
+                console.log("Student Info Data!\n:");
+                console.log(data);
 
+            } else {
+                console.error('Failed to get student info:', await response.text());
+            } 
+            
+        } catch (error) {
+            console.error('Failed to get student info:', error);
+        } finally {
+            setIsLoadingStudent(false);
+        }
+    }
 
+    useEffect(() => {
+        getStudents();
+    }, []);
+
+    // useEffect(() => {
+    //     console.log("studentdata!");
+    //     console.log(studentsData);
+    //     console.log("studentdata^");
+    // }, [studentsData]);
 
     const styleObj = {
         color: "white",
@@ -82,27 +103,33 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className="dashboard-container">
-                <div className= "column1">
-                    <StudentList students={data} onStudentClick={handleStudentClick}/>
-                </div>
-                <div className= "column2">
-                    {selectedStudent && <StudentDetail student={selectedStudent} />}
-                    <div className="graph-container">
-                        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }} >
-                            <div className="row1">
-                                <StateGraph fakeFrequency={fakeFrequency}/>
+                {isLoading ? (
+                    <div>Loading...</div>
+                ) : (
+                    <>
+                        <div className= "column1">
+                            <StudentList students={studentsData} onStudentClick={handleStudentClick}/>
+                        </div>
+                        <div className= "column2">
+                            {selectedStudent && <StudentDetail student={selectedStudent} />}
+                            <div className="graph-container">
+                                {isLoadingStudent ? (
+                                    <div>Loading...</div>
+                                ) : (
+                                    <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }}>
+                                        <div className="row1">
+                                            <StateGraph frequency={studentInfoData}/>
+                                        </div>
+                                        <div className="row2">
+                                            <ScatterPlot/>
+                                        </div>
+                                    </Box>
+                                )}
                             </div>
-                            <div className="row2">
-                                <ScatterPlot/>  
-                            </div>                       
-                        </Box>
-                    </div>
-                </div>
-                
-                
+                        </div>
+                    </>
+                )}
             </div>
-
-            
         </div>
     );
 }

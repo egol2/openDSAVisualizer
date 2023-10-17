@@ -101,17 +101,12 @@ def getExercisesDuration(filename, start, end):
             duration += action_time
     return match_count, duration
 
-def getExercisesInfo(input_data):
-    pass
-    
-# Test and run functions
-# columns=["Session", "User ID", "Inst Book", "Event Name", "Event Description", "Start Time", "End Time", "Action Time", "Exercise Type", "Number of Events"]
-# test_row = pd.DataFrame(data=[[1,15768,1106,"document event",
-#                                "User loaded the 00.01 How to Use this System module",
-#                                dt.strptime("2021-08-22 18:12:07", "%Y-%m-%d %H:%M:%S"),
-#                                dt.strptime("2021-08-22 18:12:07", "%Y-%m-%d %H:%M:%S"),"","",1]], 
-#                                columns=columns)
-# getTransitionCounts(test_row)
-# getReadingDuration(test_row, 5, 3600)
-# getVisualizationDuration(test_row, 5, 3600)
-# getExercisesDuration(test_row, 5, 3600)
+def getExercisesInfo(filename):
+    all_question_data = pd.read_csv(filename)
+    exercises_info = []
+    for question in all_question_data['question_name'].unique():
+        print("Current question",question)
+        curr_question = all_question_data[all_question_data['question_name'] == question]
+        exercises_info.append([len(curr_question[curr_question['request_type'] == 'hint']),
+                                    len(curr_question[curr_question['request_type'] == 'attempt'])])
+    return exercises_info

@@ -111,18 +111,21 @@ async def student_info(id):
     # Collecting student behavior info
     (total_transitions, transitions) = behaviors.getTransitionCounts(data)
     
+    # Check if .exercises file of student exists
+    full_exer_path = "/app/app/data/" + str(id) + ".exercises"
+    if not os.path.isfile(full_exer_path):
+        raise HTTPException(status_code=404, detail="Student ID not found")
+    exercises_info = behaviors.getExercisesInfo(full_exer_path)
+    
     # Compiling the resultant values
     result = {
         "id": id,
         "total_transitions": total_transitions,
-        "transitions": transitions
+        "transitions": transitions,
+        "exercises_info": exercises_info,
     }
 
     # Writing the .json
-    # json_file = open(full_json_path, "w")
-    # json.dump(result, json_file)
-    # json_file.close()
-
     with open(full_json_path, "w") as json_file:
         json.dump(result, json_file)
     

@@ -3,9 +3,11 @@ import '../styles/StudentList.css';
 
 const StudentList = (props) => {
 
-    // console.log("log");
-    // console.log(props);
+    console.log("log");
+    console.log(props);
     const parsedStudents = JSON.parse(props.students.replace(/'/g, '"'));
+
+    // const parsedStudents = JSON.parse(props.students);
 
     if (!parsedStudents|| !Array.isArray(parsedStudents) || parsedStudents.length === 0) {
         return <div className="list-container">No students to display.</div>;

@@ -1,6 +1,6 @@
 import pandas as pd
 from io import BytesIO
-import os
+import json
 
 # Takes in the byte buffer of the file contents as a .tsv and splits the contents of the file into separate .log files for each student
 def segment(contents, type):
@@ -42,5 +42,5 @@ def handle_scores(contents):
         })
 
     json_file = open("/app/app/data/.scores", "w")
-    json_file.write(str(result))
+    json.dump(result, json_file)
     json_file.close()

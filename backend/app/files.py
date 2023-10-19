@@ -42,5 +42,5 @@ def handle_scores(contents):
         })
 
     json_file = open("/app/app/data/.scores", "w")
-    json.dump(result, json_file)
+    json_file.write(str(result))
     json_file.close()

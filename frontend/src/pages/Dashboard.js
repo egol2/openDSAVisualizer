@@ -15,7 +15,7 @@ const Dashboard = () => {
     const handleStudentClick = (student) => {
         setSelectedStudent(student);
         getStudentInfo(student.user_id)
-    };
+    }; 
 
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +26,7 @@ const Dashboard = () => {
     const getStudents = async () => {
         // console.log("HELLOOOO");
         setIsLoading(true);
-        try {
+        try { 
             const response = await fetch('http://localhost:8000/scores');
             
             if (response.ok) {
@@ -60,7 +60,6 @@ const Dashboard = () => {
                 
                 console.log("Student Info Data!\n:");
                 console.log(data);
-
             } else {
                 console.error('Failed to get student info:', await response.text());
             } 

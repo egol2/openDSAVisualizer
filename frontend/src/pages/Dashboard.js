@@ -23,6 +23,16 @@ const Dashboard = () => {
     const [studentsData, setStudentsData] = useState([]);
     const [studentInfoData, setStudentInfoData] = useState({});
 
+    const processStudentData = async () => {
+        try {
+            const res = fetch('http://localhost:8000/process', {
+                method: 'PUT'
+            });
+        } catch (error) {
+            console.error('Error processing the files in the background:', error);
+        }
+    }
+
     const getStudents = async () => {
         // console.log("HELLOOOO");
         setIsLoading(true);
@@ -73,6 +83,7 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
+        processStudentData();
         getStudents();
     }, []);
 

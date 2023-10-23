@@ -91,6 +91,10 @@ async def scores():
     else:
         raise HTTPException(status_code=404, detail="Scores not found")
 
+@app.put("/process")
+async def process_jsons():
+    print("Hello")
+
 @app.get("/student/{id}")
 async def student_info(id):
     # Check if .json file of student exists and return it

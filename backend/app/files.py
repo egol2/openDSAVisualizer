@@ -1,6 +1,6 @@
 import pandas as pd
 from io import BytesIO
-import os
+import json
 
 # Takes in the byte buffer of the file contents as a .tsv and splits the contents of the file into separate .log files for each student
 def segment(contents, type):

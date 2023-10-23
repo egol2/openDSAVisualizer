@@ -17,8 +17,23 @@
     flex: auto; 
   }
   
-  .student-grade-box {
+  .student-proj-box {
+    background-color: rgba(159, 153, 153, 0.6);
+    padding: 5px 50px;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  .student-openDSA-box {
+    background-color: rgba(159, 153, 153, 0.6);
+    padding: 5px 50px;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  .student-Midterm-box {
     background-color: rgba(159, 153, 153, 0.6);
     padding: 5px 50px;
     font-weight: bold;
   }
+

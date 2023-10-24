@@ -71,7 +71,7 @@ const ScatterPlot = (props) => {
                 .attr('r', 4)
                 .style('fill', '#0069c0')
                 .append('title')  // Add a title element for each circle
-                .text(d => `X: ${d[0]}, Y: ${d[1]}`);
+                .text(d => `Hints: ${d[0]}, Attempts: ${d[1]}`);
         svg.style('margin-left', '100px');
         svg.style('margin-top', '40px');
     }, [data])

@@ -20,6 +20,9 @@ const StudentDetail = ({ student }) => {
         <div className="student-Midterm-box">
             <p>Midterm: {student.Midterm}</p> 
         </div>
+        <div className="student-Final-box">
+            <p>Final: {student.Final}</p> 
+        </div>
       </div>
     );
 };

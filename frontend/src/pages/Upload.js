@@ -15,7 +15,7 @@ const Upload = () => {
     const [exFile, setExFile] = useState(null);
     const [intFile, setIntFile] = useState(null);
     const [scoreFile, setScoreFile] = useState(null);
-
+    const [uploadButton, setUploadButton] = useState("Upload");
     const navigate = useNavigate();
 
     const handleFileChange = (event, setter) => {
@@ -47,7 +47,7 @@ const Upload = () => {
         }
     };
     const HandleUpload = async () => {
-
+        setUploadButton("Loading...")
       // Handle file upload logic here, e.g., send the file to a server.
         console.log('Uploading file:', exFile);
         console.log('Uploading file:', intFile);
@@ -96,7 +96,7 @@ const Upload = () => {
                         InputLabelProps={{shrink: true,}} type="file" className="input-box" onChange={(event) => handleFileChange(event, setScoreFile)} />
                     </Box>
                     <Button className='upload-button' size="large" variant="outlined" color="error" onClick={HandleUpload}>
-                        Upload
+                        {uploadButton}
                     </Button>
                 
             </div>

@@ -15,7 +15,7 @@ const Dashboard = () => {
     const handleStudentClick = (student) => {
         setSelectedStudent(student);
         getStudentInfo(student.user_id)
-    };
+    }; 
 
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -23,10 +23,20 @@ const Dashboard = () => {
     const [studentsData, setStudentsData] = useState([]);
     const [studentInfoData, setStudentInfoData] = useState({});
 
+    const processStudentData = async () => {
+        try {
+            const res = fetch('http://localhost:8000/process', {
+                method: 'PUT'
+            });
+        } catch (error) {
+            console.error('Error processing the files in the background:', error);
+        }
+    }
+
     const getStudents = async () => {
         // console.log("HELLOOOO");
         setIsLoading(true);
-        try {
+        try { 
             const response = await fetch('http://localhost:8000/scores');
             
             if (response.ok) {
@@ -60,7 +70,6 @@ const Dashboard = () => {
                 
                 console.log("Student Info Data!\n:");
                 console.log(data);
-
             } else {
                 console.error('Failed to get student info:', await response.text());
             } 

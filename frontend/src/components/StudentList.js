@@ -15,11 +15,16 @@ const StudentList = (props) => {
     
     return (
         <div className="list-container">
+            <div className="student-list-header">
+                <div className="student-header-cell">Student ID</div>
+                <div className="grade-header-cell">Grade</div>
+            </div>
             <ul className="student-list">
             {parsedStudents.map((student, index) => (
-                <li key={student.user_id} className={`list-item ${index % 2 === 0 ? 'first' : 'second'}`} onClick={() => props.onStudentClick(student)}>
-                    Student {student.user_id}
-                </li>
+                <li key={student.user_id} key2={student.Grade} className={`list-item ${index % 2 === 0 ? 'first' : 'second'}`} onClick={() => props.onStudentClick(student)}>
+                <span className="student-name">{student.user_id}</span>
+                <span className="student-grade">{student.Grade}</span>
+            </li>
             ))}
             </ul>
         </div>

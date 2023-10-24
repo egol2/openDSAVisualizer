@@ -72,7 +72,17 @@ const Dashboard = () => {
         }
     }
 
+    const processStudentData = async () => {
+        try {
+            const res = fetch('http://localhost:8000/process', {
+                method: 'PUT'
+            });
+        } catch (error) {
+            console.error('Error processing the files in the background: ', error);
+        }
+    }
     useEffect(() => {
+        processStudentData();
         getStudents();
     }, []);
 

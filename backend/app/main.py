@@ -93,7 +93,15 @@ async def scores():
 
 @app.put("/process")
 async def process_jsons():
-    print("Hello")
+    for log in glob.glob("/app/app/data/*.log"):
+        # Check if a .exercises file exists for this student
+        id = log.replace("/app/app/data/", "").replace(".log", "")
+
+        if len(glob.glob("/app/app/data/{}.exercises".format(id))) > 0:
+            # Process the student
+            await student_info(id)
+
+    return
 
 @app.get("/student/{id}")
 async def student_info(id):

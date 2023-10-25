@@ -105,7 +105,6 @@ def getExercisesInfo(filename):
     all_question_data = pd.read_csv(filename)
     exercises_info = []
     for question in all_question_data['question_name'].unique():
-        print("Current question",question)
         curr_question = all_question_data[all_question_data['question_name'] == question]
         exercises_info.append([len(curr_question[curr_question['request_type'] == 'hint']),
                                     len(curr_question[curr_question['request_type'] == 'attempt'])])

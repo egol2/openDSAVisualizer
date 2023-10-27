@@ -91,6 +91,18 @@ async def scores():
     else:
         raise HTTPException(status_code=404, detail="Scores not found")
 
+@app.put("/process")
+async def process_jsons():
+    for log in glob.glob("/app/app/data/*.log"):
+        # Check if a .exercises file exists for this student
+        id = log.replace("/app/app/data/", "").replace(".log", "")
+
+        if len(glob.glob("/app/app/data/{}.exercises".format(id))) > 0:
+            # Process the student
+            await student_info(id)
+
+    return
+
 @app.get("/student/{id}")
 async def student_info(id):
     # Check if .json file of student exists and return it
@@ -110,6 +122,7 @@ async def student_info(id):
         
     # Collecting student behavior info
     (total_transitions, transitions) = behaviors.getTransitionCounts(data)
+    # module_durations = behaviors.getDurationByModule(data)
     
     # Check if .exercises file of student exists
     full_exer_path = "/app/app/data/" + str(id) + ".exercises"
@@ -123,6 +136,7 @@ async def student_info(id):
         "total_transitions": total_transitions,
         "transitions": transitions,
         "exercises_info": exercises_info,
+        # "module_durations": module_durations,
     }
 
     # Writing the .json

@@ -14,19 +14,29 @@ const Dashboard = () => {
 
     const handleStudentClick = (student) => {
         setSelectedStudent(student);
-        getStudentInfo(student.user_id)
-    };
+        getStudentInfo(student.user_id);
+    }; 
 
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadingStudent, setIsLoadingStudent] = useState(true);
     const [studentsData, setStudentsData] = useState([]);
     const [studentInfoData, setStudentInfoData] = useState({});
+    const [hintAtt, setHint] = useState([]);
+
+    const processStudentData = async () => {
+        try {
+            const res = fetch('http://localhost:8000/process', {
+                method: 'PUT'
+            });
+        } catch (error) {
+            console.error('Error processing the files in the background:', error);
+        }
+    }
 
     const getStudents = async () => {
-        // console.log("HELLOOOO");
         setIsLoading(true);
-        try {
+        try { 
             const response = await fetch('http://localhost:8000/scores');
             
             if (response.ok) {
@@ -34,8 +44,8 @@ const Dashboard = () => {
                 const data = await response.json();
                 setStudentsData(data);
                 
-                console.log("Student Data\n:");
-                console.log(data);
+                // console.log("Student Data\n:");
+                // console.log(data);
 
             } else {
                 console.error('Failed to get students:', await response.text());
@@ -57,10 +67,9 @@ const Dashboard = () => {
                 console.log('Get student info successfully');
                 const data = await response.json();
                 setStudentInfoData(data);
-                
+                setHint(data.exercises_info);
                 console.log("Student Info Data!\n:");
                 console.log(data);
-
             } else {
                 console.error('Failed to get student info:', await response.text());
             } 
@@ -73,6 +82,7 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
+        processStudentData();
         getStudents();
     }, []);
 
@@ -121,7 +131,7 @@ const Dashboard = () => {
                                             <StateGraph frequency={studentInfoData}/>
                                         </div>
                                         <div className="row2">
-                                            <ScatterPlot/>
+                                            <ScatterPlot hintAttemp = {hintAtt}/>
                                         </div>
                                     </Box>
                                 )}

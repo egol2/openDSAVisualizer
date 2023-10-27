@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 from datetime import datetime as dt, timedelta
+import re
 
 # Reads Interactions file generated from abstracing_script with suffix _merged_result_unannotated.csv
 def read_session_data(input_data):
@@ -101,12 +102,51 @@ def getExercisesDuration(filename, start, end):
             duration += action_time
     return match_count, duration
 
+# Get a list of lists where each sublist is [hints, attempts] for each question
 def getExercisesInfo(filename):
     all_question_data = pd.read_csv(filename)
     exercises_info = []
     for question in all_question_data['question_name'].unique():
-        print("Current question",question)
         curr_question = all_question_data[all_question_data['question_name'] == question]
         exercises_info.append([len(curr_question[curr_question['request_type'] == 'hint']),
                                     len(curr_question[curr_question['request_type'] == 'attempt'])])
     return exercises_info
+
+# Get a dictionary where keys are "Reading", "Visualizations", and "Exercises"
+# Each value list is a list of cumulative durations by module
+def getDurationByModule(input_data):
+    read_session_data(input_data)
+    module_durations = {"Reading": [],
+                    "Visualizations": [],
+                    "Exercises": []}
+    
+    # Reading
+    reading_events = data[data["Action Time"].astype(str).str.contains("Reading time")]
+    reading_ids = reading_events["Event Description"].str.extract(r'(\d{2}\.\d{2})', expand=False)
+    for id in reading_ids.unique().tolist():
+        single_module = reading_events[reading_events["Event Description"].str.contains(id)].reset_index(drop=True)
+        single_duration = 0.0
+        for i in single_module.index:
+            single_duration += float(single_module.iloc[i]["Action Time"][13:-3])
+        module_durations["Reading"].append(single_duration)
+
+    # Visualizations
+    vis_events = data[data["Event Name"] == "FF event"]
+    vis_ids = vis_events["Exercise Type"]
+    for id in vis_ids.unique().tolist():
+        single_module = vis_events[vis_events["Exercise Type"] == id].reset_index(drop=True)
+        single_duration = 0.0
+        for i in single_module.index:
+            single_duration += float(getDeltaTime(single_module.iloc[i]["Start Time"], single_module.iloc[i]["End Time"]))
+        module_durations["Visualizations"].append(single_duration)
+
+    # Exercises
+    exer_events = data[data["Event Name"] == "PE event"]
+    exer_ids = exer_events["Exercise Type"]
+    for id in exer_ids.unique().tolist():
+        single_module = exer_events[exer_events["Exercise Type"] == id].reset_index(drop=True)
+        single_duration = 0.0
+        for i in single_module.index:
+            single_duration += float(getDeltaTime(single_module.iloc[i]["Start Time"], single_module.iloc[i]["End Time"]))
+        module_durations["Exercises"].append(single_duration)
+    return module_durations

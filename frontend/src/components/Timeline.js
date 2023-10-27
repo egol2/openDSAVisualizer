@@ -11,6 +11,13 @@ const Timeline = (props) => {
     const data = [
         [{ Reading: 34 }, { Exercise: 56 }, { Visualization: 20 }, { Exercise: 45 }, { Visualization: 60 }, { Reading: 123 }],
         [{ Exercise: 56 }, { Visualization: 20 }, { Exercise: 45 }, { Reading: 123 }],
+        [{ Exercise: 56 }, { Visualization: 20 }, { Exercise: 45 }, { Reading: 123 }],
+        [{ Exercise: 56 }, { Visualization: 20 }, { Exercise: 45 }, { Reading: 123 }],
+        [{ Exercise: 56 }, { Visualization: 20 }, { Exercise: 45 }, { Reading: 123 }],
+        [{ Exercise: 56 }, { Visualization: 20 }, { Exercise: 45 }, { Reading: 123 }],
+        [{ Exercise: 56 }, { Visualization: 20 }, { Exercise: 45 }, { Reading: 123 }],
+        [{ Exercise: 56 }, { Visualization: 20 }, { Exercise: 45 }, { Reading: 123 }],
+        [{ Exercise: 56 }, { Visualization: 20 }, { Exercise: 45 }, { Reading: 123 }],
     ];
 
     // console.log("props");
@@ -93,7 +100,7 @@ const Timeline = (props) => {
                 {
                     data.map((_, index) => (
                         <ListItemStyled key={index}>
-                            <svg id={`timeline-${index}`} width="800" height="200"></svg>
+                            <svg id={`timeline-${index}`} width="800" height="110"></svg>
                         </ListItemStyled>
                     ))
                 }

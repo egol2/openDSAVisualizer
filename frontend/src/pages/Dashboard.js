@@ -4,6 +4,7 @@ import '../styles/Dashboard.css';
 import Box from '@mui/material/Box';
 import StateGraph from '../components/StateGraph';
 import ScatterPlot from '../components/ScatterPlot';
+import Timeline from '../components/Timeline';
 import { Link } from "react-router-dom";
 import StudentList from '../components/StudentList';
 import StudentDetail from '../components/StudentDetail';
@@ -132,6 +133,9 @@ const Dashboard = () => {
                                         </div>
                                         <div className="row2">
                                             <ScatterPlot hintAttemp = {hintAtt}/>
+                                        </div>
+                                        <div className="row3">
+                                            <Timeline frequency={studentInfoData}/>
                                         </div>
                                     </Box>
                                 )}

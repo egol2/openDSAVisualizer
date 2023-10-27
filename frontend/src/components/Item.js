@@ -1,5 +1,3 @@
-
-
 import {BoxProps} from "@mui/material/Box";
 import {Box} from "@mui/system";
 import React from "react";

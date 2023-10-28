@@ -113,7 +113,7 @@ async def student_info(id):
     data = abstractor.abstract(full_item_path)
         
     # Collecting student behavior info
-    (total_transitions, transitions, session_durations) = behaviors.getTransitionCounts(data)
+    total_transitions, transitions = behaviors.getTransitionCounts(data)
     module_durations = behaviors.getDurationByModule(data)
     session_durations = behaviors.getDurationBySession(data)
     

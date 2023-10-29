@@ -167,24 +167,24 @@ def getDurationForRow(row):
 
 def getDurationBySession(input_data):
     read_session_data(input_data)
-    data = data[data['Event Name'].isin(reading + visualization + exercises)]
-    data = data.reset_index(drop=True)
-    data['Event Name'] = data['Event Name'].replace(reading, "reading")
-    data['Event Name'] = data['Event Name'].replace(visualization, "visualizations")
-    data['Event Name'] = data['Event Name'].replace(exercises, "exercises")
-    data['Duration'] = data.apply(lambda x:getDurationForRow(x), axis=1)
+    event_data = data[data['Event Name'].isin(reading + visualization + exercises)]
+    event_data = event_data.reset_index(drop=True)
+    event_data['Event Name'] = event_data['Event Name'].replace(reading, "reading")
+    event_data['Event Name'] = event_data['Event Name'].replace(visualization, "visualizations")
+    event_data['Event Name'] = event_data['Event Name'].replace(exercises, "exercises")
+    event_data['Duration'] = event_data.apply(lambda x:getDurationForRow(x), axis=1)
 
     threshold = 1 # second
 
     # Mask value is True if consecutive state, False otherwise
-    mask = data['Event Name'] != data['Event Name'].shift(1, fill_value=data['Event Name'].iloc[0])
+    mask = event_data['Event Name'] != event_data['Event Name'].shift(1, fill_value=data['Event Name'].iloc[0])
     group_key = mask.cumsum()
 
     # Group by Session and consecutive state mask then sum up the 'Duration' column
-    result = data.groupby(['Session', group_key])['Duration'].sum().reset_index()
+    result = event_data.groupby(['Session', group_key])['Duration'].sum().reset_index()
 
     # Dictionary that maps group_key to the original Event Name
-    event_name_mapping = data.groupby(group_key)['Event Name'].first().to_dict()
+    event_name_mapping = event_data.groupby(group_key)['Event Name'].first().to_dict()
     # Replace group_key with the original Event Name
     result['Event Name'] = result["Event Name"].map(event_name_mapping)
 
@@ -196,5 +196,6 @@ def getDurationBySession(input_data):
     result_grouped = result.groupby('Session').apply(lambda x: [(row['Event Name'], row['Duration']) for _, row in x.iterrows()]).reset_index(name='Processing')
     result_grouped_list = result_grouped[['Session', 'Processing']].values.tolist()
 
+    print(result_grouped_list)
     return result_grouped_list
     

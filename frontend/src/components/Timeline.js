@@ -43,11 +43,11 @@ const Timeline = (props) => {
         });
 
         // where the left side of the svg starts to get drawn from
-        const leftX = 25;
+        const leftX = 45;
 
         // Draw the cumulative timeline
         const overlaySVG = d3.select("#overlay-timeline");
-        const baseY = 205;  // Middle of the SVG height
+        const baseY = 245;  // Middle of the SVG height
 
         // 3. Generate the correct x-axis for the cumulative timeline
         const xScaleCumulative = d3.scaleLinear()
@@ -55,8 +55,15 @@ const Timeline = (props) => {
             .range([leftX, 790]);
 
         overlaySVG.append("g")
-            .attr("transform", "translate(0,205)") 
-            .call(d3.axisBottom(xScaleCumulative).ticks(10));
+            .attr("transform", "translate(0,"+baseY+")") 
+            .call(d3.axisBottom(xScaleCumulative).ticks(10))
+            .append("text")  // Add this line to append a text label
+            .attr("fill", "#000")  // Set the text color
+            .attr("y", 30)  // The y position of the text
+            .attr("dy", ".71em")  // Shift the position a bit to properly align
+            .style("text-anchor", "start")  // Anchor the text at the end position
+            .attr("x", 350)  // The y position of the text
+            .text("Time in seconds");  // The label
         
         const calcFrequencyAtSecond = (second, category) => {
             let countAtSecond = 0;
@@ -93,10 +100,18 @@ const Timeline = (props) => {
 
         const yScaleFrequency = d3.scaleLinear()
             .domain([0, maxFrequency])
-            .range([baseY, baseY - 200]);  // adjust the range as needed
+            .range([baseY, baseY - 400]);  // adjust the range as needed
         overlaySVG.append("g")
             .attr("transform", "translate("+ leftX + ",0)") 
-            .call(d3.axisLeft(yScaleFrequency).ticks(5));
+            .call(d3.axisLeft(yScaleFrequency).ticks(10))
+            .append("text")  // Add this line to append a text label
+            .attr("fill", "#000")  // Set the text color
+            .attr("transform", "rotate(-90)")  // Rotate the text to be vertical
+            .attr("y", -45)  // The y position of the text
+            .attr("dy", ".71em")  // Shift the position a bit to properly align
+            .style("text-anchor", "middle")  // Anchor the text at the end position
+            .attr("x", -100)  // The y position of the text
+            .text("Frequency");  // The label
         
         categories.forEach(category => {
             let upperPoints = [];
@@ -137,7 +152,14 @@ const Timeline = (props) => {
 
             svg.append("g")
                 .attr("transform", "translate(0,85)")
-                .call(d3.axisBottom(xScaleCumulative).ticks(10));
+                .call(d3.axisBottom(xScaleCumulative).ticks(10))
+                .append("text")  // Add this line to append a text label
+                .attr("fill", "#000")  // Set the text color
+                .attr("y", 30)  // The y position of the text
+                .attr("dy", ".71em")  // Shift the position a bit to properly align
+                .style("text-anchor", "start")  // Anchor the text at the end position
+                .attr("x", 350)  // The y position of the text
+                .text("Time in seconds");  // The label
 
             entryArray.forEach(entry => {
                 const category = entry[0];
@@ -180,6 +202,18 @@ const Timeline = (props) => {
 
             xOffset += currentSpacing;
         });
+
+        const totalSessions = data.length;
+        // Assuming the width of the legend SVG is known
+        const legendWidth = legendSvg.node().getBoundingClientRect().width;
+
+        // Add a label for total number of sessions, right-justified
+        legendSvg.append("text")
+            .attr("x", legendWidth - 10)  // Subtracting 10 for padding
+            .attr("y", 16)
+            .attr("text-anchor", "end")
+            .text(`Total Sessions: ${totalSessions}`);
+
     }, [data]);
     
     
@@ -203,12 +237,12 @@ const Timeline = (props) => {
 
                 {/* Combined Timelines Entry */}
                 <ListItemStyled>
-                    <svg id="overlay-timeline" width="800" height="250"></svg>
+                    <svg id="overlay-timeline" width="800" height="300"></svg>
                 </ListItemStyled>
 
                 {data.map((_, index) => (
                     <ListItemStyled key={index}>
-                        <svg id={`timeline-${index + 1}`} width="800" height="110"></svg>
+                        <svg id={`timeline-${index + 1}`} width="800" height="130"></svg>
                     </ListItemStyled>
                 ))}
             </List>

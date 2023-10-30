@@ -121,8 +121,9 @@ async def student_info(id):
     data = abstractor.abstract(full_item_path)
         
     # Collecting student behavior info
-    (total_transitions, transitions) = behaviors.getTransitionCounts(data)
-    # module_durations = behaviors.getDurationByModule(data)
+    total_transitions, transitions = behaviors.getTransitionCounts(data)
+    module_durations = behaviors.getDurationByModule(data)
+    session_durations = behaviors.getDurationBySession(data)
     
     # Check if .exercises file of student exists
     full_exer_path = "/app/app/data/" + str(id) + ".exercises"
@@ -136,7 +137,8 @@ async def student_info(id):
         "total_transitions": total_transitions,
         "transitions": transitions,
         "exercises_info": exercises_info,
-        # "module_durations": module_durations,
+        "module_durations": module_durations,
+        "session_durations": session_durations,
     }
 
     # Writing the .json

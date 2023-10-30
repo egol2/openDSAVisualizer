@@ -174,7 +174,7 @@ def getDurationBySession(input_data):
     event_data['Event Name'] = event_data['Event Name'].replace(exercises, "exercises")
     event_data['Duration'] = event_data.apply(lambda x:getDurationForRow(x), axis=1)
 
-    threshold = 1 # second
+    threshold = 30 # second
 
     # Mask value is True if consecutive state, False otherwise
     mask = event_data['Event Name'] != event_data['Event Name'].shift(1, fill_value=data['Event Name'].iloc[0])

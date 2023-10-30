@@ -135,7 +135,7 @@ const Dashboard = () => {
                                             <ScatterPlot hintAttemp = {hintAtt}/>
                                         </div>
                                         <div className="row3">
-                                            <Timeline frequency={studentInfoData}/>
+                                            <Timeline duration={studentInfoData}/>
                                         </div>
                                     </Box>
                                 )}

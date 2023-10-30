@@ -2,8 +2,8 @@ import React from 'react';
 import '../styles/StateGraph.css';
 const StateGraph = (props) => {
 
-    // console.log("props");
-    // console.log(props);
+    console.log("props Stategraph:");
+    console.log(props);
 
     const totalTransitions = props.frequency.total_transitions;
 

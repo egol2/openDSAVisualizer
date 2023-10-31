@@ -71,7 +71,7 @@ const Timeline = (props) => {
             .attr("y", 30)  // The y position of the text
             .attr("dy", ".71em")  // Shift the position a bit to properly align
             .style("text-anchor", "start")  // Anchor the text at the end position
-            .attr("x", 380)  // The y position of the text
+            .attr("x", 790/2)  // The y position of the text
             .text("Time in minutes");  // The label
         
         const calcFrequencyAtSecond = (second, category) => {
@@ -234,7 +234,7 @@ const Timeline = (props) => {
             .attr("x", -(yOffset + timelineHeight * (data.length - 1) + 5) / 2)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
-            .text("Sessions (chronological from top to bottom)");
+            .text("Sessions");
 
         // Append x-axis and label below all timelines
         svg2.append("g")
@@ -245,7 +245,7 @@ const Timeline = (props) => {
             .attr("y", 30)
             .attr("dy", ".71em")
             .style("text-anchor", "start")
-            .attr("x", 380)
+            .attr("x", 790/2)
             .text("Time in minutes");
 
 

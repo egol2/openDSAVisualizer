@@ -152,6 +152,9 @@ def getDurationByModule(input_data):
         module_durations["Exercises"].append(single_duration)
     return module_durations
 
+# Get the duration of the event represented by a row
+# Assumes Event Name is one of: "reading", "visualizations", "exercises" else duration is 0
+# Used in conjunction with getDurationBySession() which cleans and categorizes the data
 def getDurationForRow(row):
     if row["Event Name"] == "reading":
         if "Reading time" in str(row['Action Time']):
@@ -165,6 +168,10 @@ def getDurationForRow(row):
     else:
         return 0
 
+# Get a list of lists where each sublist represents a given state of a single session
+# First element of the sublist is the session ID
+# Second element is the current state
+# Third element is the duration which the student spent in that state before a transition
 def getDurationBySession(input_data):
     read_session_data(input_data)
     event_data = data[data['Event Name'].isin(reading + visualization + exercises)]

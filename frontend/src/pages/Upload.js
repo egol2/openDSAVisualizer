@@ -9,7 +9,7 @@ import '../styles/Upload.css';
 import { Link } from "react-router-dom";
 import Header from '../components/Header';
 import { useNavigate } from "react-router-dom";
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Upload = () => {
     const [exFile, setExFile] = useState(null);
@@ -17,6 +17,7 @@ const Upload = () => {
     const [scoreFile, setScoreFile] = useState(null);
     const [uploadButton, setUploadButton] = useState("Upload");
     const navigate = useNavigate();
+    const [submitClicked, setSubmitClicked] = useState(false);
 
     const handleFileChange = (event, setter) => {
       const file = event.target.files[0];
@@ -47,7 +48,8 @@ const Upload = () => {
         }
     };
     const HandleUpload = async () => {
-        setUploadButton("Loading...")
+        setSubmitClicked(true);
+        //setUploadButton("Loading...")
       // Handle file upload logic here, e.g., send the file to a server.
         console.log('Uploading file:', exFile);
         console.log('Uploading file:', intFile);
@@ -95,9 +97,15 @@ const Upload = () => {
                         <TextField label="Scores"
                         InputLabelProps={{shrink: true,}} type="file" className="input-box" onChange={(event) => handleFileChange(event, setScoreFile)} />
                     </Box>
-                    <Button className='upload-button' size="large" variant="outlined" color="error" onClick={HandleUpload}>
+                    {submitClicked ? (
+                        <CircularProgress />
+                    ) : (
+                        
+                        <Button className='upload-button' size="large" variant="outlined" color="error" onClick={HandleUpload}>
                         {uploadButton}
-                    </Button>
+                        </Button>
+                    )}
+                    
                 
             </div>
         </div>

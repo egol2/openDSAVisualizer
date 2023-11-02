@@ -24,7 +24,7 @@ const Timeline = (props) => {
 
     // const data = props.duration;
 
-    const categories = ["reading", "exercises", "visualizations"];
+    const categories = ["reading", "visualizations", "exercises"];
     const colors = d3.scaleOrdinal().domain(categories).range(d3.schemeCategory10);
 
     useEffect(() => {

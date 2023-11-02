@@ -9,6 +9,7 @@
     
   }
   .dashboard-container {
+    border-radius: 8px;
     display: grid;
     grid-template-columns: 20% 80%;
     grid-template-rows: auto auto;
@@ -16,7 +17,8 @@
 }
 
 .graph-container {
-    background-color: rgba(203, 201, 201, 0.655); 
+    border-radius: 8px;
+    background-color: var(--primary); 
     padding-top: 10px;
     padding-left: 20px;
     margin: 10px;
@@ -31,14 +33,16 @@
 .row1,
 .row3,
 .row2 {
-    background-color: rgba(242, 242, 242, 0.991);
+    border-radius: 8px;
+    background-color: var(--secondary);
     padding: 10px; 
     margin-bottom: 10px; 
     width: 95%;
 }
 
 .upload-button-container {
-    background-color: rgb(80, 78, 78);
+    border-radius: 8px;
+    background-color: var(--primary);
     padding: 10px;
     margin: 10px; 
     margin-right: 80px;
@@ -49,8 +53,8 @@
 .dashboard-header {
     display: flex;
     justify-content: space-between;
-    background-color: rgba(213, 212, 212, 0.703);
-    color:rgb(80, 78, 78);
+    background-color: var(--primary);
+    color: var(--text);
     font-weight: bold;
     font-size: 25px;
     padding: 0 5vh;

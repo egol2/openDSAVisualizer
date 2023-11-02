@@ -11,16 +11,17 @@ const StudentDetail = ({ student }) => {
         <div className="student-id-box">
             <h2>Student ID: {student.user_id}</h2>
         </div>
-        <div className="student-proj-box">
+        <div className="empty"></div>
+        <div className="student-box">
             <p>Projects: {student.Projects}</p> 
         </div>
-        <div className="student-openDSA-box">
+        <div className="student-box">
             <p>OpenDSA: {student.OpenDSA}</p> 
         </div>
-        <div className="student-Midterm-box">
+        <div className="student-box">
             <p>Midterm: {student.Midterm}</p> 
         </div>
-        <div className="student-Final-box">
+        <div className="student-box">
             <p>Final: {student.Final}</p> 
         </div>
       </div>

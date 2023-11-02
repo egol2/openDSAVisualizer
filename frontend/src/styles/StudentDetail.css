@@ -1,35 +1,55 @@
 .student-detail-box {
     display: flex;
-    justify-content: flex-end;
-    padding: 10px;
-    background-color: rgba(203, 201, 201, 0.655);
+    justify-content: space-evenly;
+    align-items: center;
+
+    padding: 5px;
+    border-radius: 8px;
+    background-color: var(--primary);
     width: 95%;
     margin: 10px;
-    overflow-y: auto;
+    /* overflow-y: auto; */
   }
 
   .user-picture {
-    margin-top: 18px;
-    margin-left: 15px;
+    margin: 15px;
+    color: var(--text);
+  }
+
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
   }
   
   .student-id-box {
-    flex: auto; 
-  }
-  
-  .student-proj-box {
-    background-color: rgba(159, 153, 153, 0.6);
-    padding: 5px 50px;
+    border-radius: 8px;
+    background-color: var(--secondary);
+    padding: 12px 20px;
     font-weight: bold;
-    margin-right: 5px;
+    margin: 0 5px;
+    color: var(--text);
   }
 
-  .student-openDSA-box {
-    background-color: rgba(159, 153, 153, 0.6);
-    padding: 5px 50px;
-    font-weight: bold;
-    margin-right: 5px;
+  .empty {
+
+    width: 100px;
+
   }
+
+  .student-box {
+    border-radius: 8px;
+    background-color: var(--secondary);
+    padding: 12px 20px;
+    font-weight: bold;
+    margin: 5px;
+    color: var(--text);
+  }
+  /*
 
   .student-Midterm-box {
     background-color: rgba(159, 153, 153, 0.6);
@@ -42,4 +62,4 @@
     background-color: rgba(159, 153, 153, 0.6);
     padding: 5px 50px;
     font-weight: bold;
-  }
+  } */

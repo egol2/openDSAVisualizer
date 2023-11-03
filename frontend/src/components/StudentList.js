@@ -10,7 +10,31 @@ const StudentList = (props) => {
     console.log(props);
     const parsedStudents = JSON.parse(props.students.replace(/'/g, '"'));
 
-    // const parsedStudents = JSON.parse(props.students);
+    // sort students by letter grade and total percentage
+    const gradeValues = {
+        'A+': 12,
+        A: 11,
+        'A-': 10,
+        'B+': 9,
+        B: 8,
+        'B-': 7,
+        'C+': 6,
+        C: 5,
+        'C-': 4,
+        'D+': 3,
+        D: 2,
+        'D-': 1,
+        F: 0,
+    };
+
+    parsedStudents.sort((a, b) => {
+        if (a.Grade === b.Grade) {
+            const aTotal = a.Projects + a.Midterm + a.Final;
+            const bTotal = b.Projects + b.Midterm + b.Final;
+            return bTotal - aTotal;
+        }
+        return gradeValues[b.Grade] - gradeValues[a.Grade];
+    });
 
     if (!parsedStudents|| !Array.isArray(parsedStudents) || parsedStudents.length === 0) {
         return <div className="list-container">No students to display.</div>;

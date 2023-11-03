@@ -16,6 +16,8 @@ const Dashboard = () => {
     const handleStudentClick = (student) => {
         setSelectedStudent(student);
         getStudentInfo(student.user_id);
+        console.log("Student212322\n:");
+        console.log(student);
     }; 
 
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -44,10 +46,6 @@ const Dashboard = () => {
                 console.log('Get student list successfully');
                 const data = await response.json();
                 setStudentsData(data);
-                
-                // console.log("Student Data\n:");
-                // console.log(data);
-
             } else {
                 console.error('Failed to get students:', await response.text());
             } 
@@ -87,6 +85,13 @@ const Dashboard = () => {
         getStudents();
     }, []);
 
+    useEffect(() => {
+        if (studentsData.length > 0) {
+            const parsedData = JSON.parse(studentsData.replace(/'/g, '"'));
+            handleStudentClick(parsedData[0]);
+        }
+    }, [studentsData]);
+
     // useEffect(() => {
     //     console.log("studentdata!");
     //     console.log(studentsData);
@@ -94,14 +99,14 @@ const Dashboard = () => {
     // }, [studentsData]);
 
     const styleObj = {
-        color: "white",
-        fontWeight: "bold",
-        "&:hover": {
-          backgroundColor: "rgba(213, 212, 212, 0.703)"
-        },
-        "&:active": {
-          backgroundColor: "rgb(80, 78, 78)"
-        }
+            color: "var(--text)",
+            fontWeight: "bold",
+            "&:hover": {
+                backgroundColor: "var(--highlight)"
+            },
+            "&:active": {
+                backgroundColor: "var(--highlight)"
+            }
     };
 
     const fakeFrequency = [8, 1, 10, 3, 4, 5]; //fake frequency for the state graph

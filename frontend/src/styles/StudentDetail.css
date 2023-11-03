@@ -1,19 +1,15 @@
 .student-detail-box {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-
     padding: 5px;
     border-radius: 8px;
     background-color: var(--primary);
-    width: 95%;
     margin: 10px;
-    /* overflow-y: auto; */
   }
 
   .user-picture {
-    margin: 15px;
-    color: var(--text);
+    margin-right: 15px;
   }
 
   h2 {
@@ -25,20 +21,21 @@
     margin: 0;
     padding: 0;
   }
+
+  .right-box {
+
+    display: flex;
+
+  }
   
   .student-id-box {
+    display: flex;
     border-radius: 8px;
     background-color: var(--secondary);
     padding: 12px 20px;
     font-weight: bold;
     margin: 0 5px;
     color: var(--text);
-  }
-
-  .empty {
-
-    width: 100px;
-
   }
 
   .student-box {
@@ -49,17 +46,3 @@
     margin: 5px;
     color: var(--text);
   }
-  /*
-
-  .student-Midterm-box {
-    background-color: rgba(159, 153, 153, 0.6);
-    padding: 5px 50px;
-    font-weight: bold;
-    margin-right: 5px;
-  }
-
-  .student-Final-box {
-    background-color: rgba(159, 153, 153, 0.6);
-    padding: 5px 50px;
-    font-weight: bold;
-  } */

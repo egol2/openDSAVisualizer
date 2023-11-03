@@ -1,5 +1,7 @@
 import React from 'react';
 import '../styles/StateGraph.css';
+import * as d3 from 'd3';
+
 const StateGraph = (props) => {
 
     console.log("props Stategraph:");
@@ -11,66 +13,92 @@ const StateGraph = (props) => {
         return (value / totalTransitions) * 40 + 5;
     }
 
-    const normalizeArrow = (value) => {
-        return (value / totalTransitions) * 2;
-    }
+    const totalDurations = {
+        Reading: props.frequency.module_durations.Reading.reduce((acc, cur) => acc + cur, 0),
+        Visualizations: props.frequency.module_durations.Visualizations.reduce((acc, cur) => acc + cur, 0),
+        Exercises: props.frequency.module_durations.Exercises.reduce((acc, cur) => acc + cur, 0)
+    };
+
+    // Find the max duration to normalize the sizes accordingly
+    const maxDuration = Math.max(totalDurations.Reading, totalDurations.Visualizations, totalDurations.Exercises);
+
+    const normalizeCircle = (duration) => {
+        // This normalization will ensure that the largest circle has a radius of 40 units,
+        // and the other circles are scaled down accordingly.
+        return (duration / maxDuration) * 30 + 40;
+    };
+
+    const svgWidth = 700;
+    const offsetX = (svgWidth - 600) / 2;
+
+    const categories = ['Reading', 'Visualizing', 'Exercise'];
+    const colors = d3.scaleOrdinal().domain(categories).range(d3.schemeCategory10);
 
     return (
         <div className="state-graph">
-                
-            <svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+            
+            <svg width={svgWidth} height="400" xmlns="http://www.w3.org/2000/svg">
 
-            <path d="M 50 200 q 250 -350 500 0" stroke="#454747"
+            <path d={`M ${50 + offsetX} 200 q 250 -350 500 0`} stroke="#454747"
                 strokeWidth={normalize(props.frequency.transitions.RE)} fill="none">
                 <title>Reading → Exercise: {props.frequency.transitions.RE}</title>
             </path>
-            <polygon points="300,10 320,25 300,40" style={{fill: "#454747"}} />
+            <text x={295 + offsetX} y={70} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.RE}</text>
+            <polygon points={`${290 + offsetX},5 ${320 + offsetX},25 ${290 + offsetX},45`} style={{fill: "#454747"}} />
 
-            <path d="M 50 200 q 125 -150 250 0" stroke="#454747"
+            <path d={`M ${50 + offsetX} 200 q 125 -150 250 0`} stroke="#454747"
                 strokeWidth={normalize(props.frequency.transitions.RV)} fill="none">
                 <title>Reading → Visualizing: {props.frequency.transitions.RV}</title>
             </path>
-            <polygon points="170,110 190,125 170,140" style={{fill: "#454747"}} />
+            <text x={165 + offsetX} y={165} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.RV}</text>
+            <polygon points={`${160 + offsetX},105 ${190 + offsetX},125 ${160 + offsetX},145`} style={{fill: "#454747"}} />
 
-            <path d="M 300 200 q 125 -150 250 0" stroke="#454747"
+            <path d={`M ${300 + offsetX} 200 q 125 -150 250 0`} stroke="#454747"
                 strokeWidth={normalize(props.frequency.transitions.VE)} fill="none">
                 <title>Visualizing → Exercise: {props.frequency.transitions.VE}</title>
             </path>
-            <polygon points="420,110 450,125 420,140" style={{fill: "#454747"}} />
+            <text x={425 + offsetX} y={165} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.VE}</text>
+            <polygon points={`${420 + offsetX},105 ${450 + offsetX},125 ${420 + offsetX},145`} style={{fill: "#454747"}} />
 
-            <path d="M 50 200 q 125 150 250 0" stroke="#454747"
+            <path d={`M ${50 + offsetX} 200 q 125 150 250 0`} stroke="#454747"
                 strokeWidth={normalize(props.frequency.transitions.VR)} fill="none">
                 <title>Visualizing → Reading: {props.frequency.transitions.VR}</title>
             </path>
-            <polygon points="190,260 170,275 190,290" style={{fill: "#454747"}} />
+            <text x={165 + offsetX} y={245} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.VR}</text>
+            <polygon points={`${200 + offsetX},255 ${170 + offsetX},275 ${200 + offsetX},295`} style={{fill: "#454747"}} />
 
-            <path d="M 300 200 q 125 150 250 0" stroke="#454747"
+            <path d={`M ${300 + offsetX} 200 q 125 150 250 0`} stroke="#454747"
                 strokeWidth={normalize(props.frequency.transitions.EV)} fill="none">
                 <title>Exercise → Visualizing: {props.frequency.transitions.EV}</title>
             </path>
-            <polygon points="450,260 420,275 450,290" style={{fill: "#454747"}} />
+            <text x={425 + offsetX} y={245} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.EV}</text>
+            <polygon points={`${450 + offsetX},255 ${420 + offsetX},275 ${450 + offsetX},295`} style={{fill: "#454747"}} />
 
-            <path d="M 50 200 q 250 350 500 0" stroke="#454747"
+            <path d={`M ${50 + offsetX} 200 q 250 350 500 0`} stroke="#454747"
                 strokeWidth={normalize(props.frequency.transitions.ER)} fill="none">
                 <title>Exercise → Reading: {props.frequency.transitions.ER}</title>
             </path>
-            <polygon points="320,360 300,375 320,390" style={{fill: "#454747"}} />
+            <text x={295 + offsetX} y={345} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.ER}</text>
+            <polygon points={`${330 + offsetX},355 ${300 + offsetX},375 ${330 + offsetX},395`} style={{fill: "#454747"}} />
 
 
-                <circle className="reading-circle" cx="50" cy="200" r="40" stroke="black" strokeWidth="0" fill="#E3B448" />
-                <text x="22" y="205" fill="black" fontSize="15" fontWeight="bold">Reading</text>
+            <circle className="reading-circle" cx={50 + offsetX} cy="200"
+                    r={normalizeCircle(totalDurations.Reading)} stroke="black" strokeWidth="0" fill={colors('Reading')} />
+            <text x={22 + offsetX} y="205" fill="black" fontSize="15" fontWeight="bold">Reading</text>
 
-                <circle className="vis-circle" cx="300" cy="200" r="40" stroke="black" strokeWidth="0" fill="#CBD18F" />
-                <text x="262" y="205" fill="black" fontSize="15" fontWeight="bold">Visualizing</text>
+            <circle className="vis-circle" cx={300 + offsetX} cy="200"
+                    r={normalizeCircle(totalDurations.Visualizations)} stroke="black" strokeWidth="0" fill={colors('Visualizing')} />
+            <text x={262 + offsetX} y="205" fill="black" fontSize="15" fontWeight="bold">Visualizing</text>
 
-                <circle className="ex-circle" cx="550" cy="200" r="40" stroke="black" strokeWidth="0" fill="#4e9147" />
-                <text x="522" y="205" fill="black" fontSize="15" fontWeight="bold">Exercise</text>
+            <circle className="ex-circle" cx={550 + offsetX} cy="200"
+                    r={normalizeCircle(totalDurations.Exercises)} stroke="black" strokeWidth="0" fill={colors('Exercise')} />
+            <text x={522 + offsetX} y="205" fill="black" fontSize="15" fontWeight="bold">Exercise</text>
 
             </svg>
         </div>       
     );
-    
-    
+
 }
 
 export default StateGraph;
+

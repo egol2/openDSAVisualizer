@@ -1,6 +1,6 @@
 // import React from 'react';
 import React, { useEffect, useState } from 'react';
-import '../styles/StateGraph.css';
+import '../styles/Timeline.css';
 import * as d3 from 'd3';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -8,28 +8,16 @@ import styled from '@emotion/styled';
 import Slider from '@mui/material/Slider';
 
 const Timeline = (props) => {
-    /*
-    const data = [
-        [{ R: 34 }, { E: 56 }, { V: 20 }, { E: 45 }, { V: 60 }, { R: 123 }],
-        [{ R: 34 }, { E: 56 }, { V: 20 }, { E: 45 }, { V: 60 }, { R: 123 }],
-        // [{ R: 34 }, { E: 56 }, { V: 20 }, { E: 45 }, { V: 60 }, { R: 123 }],
-        [{ R: 500 }],
-    ];
-    */
-    // const data = props.duration.session_durations;
     const data = props.duration.session_durations.map(entry => entry[1]);
 
     console.log("data");
     console.log(data);
-
-    // const data = props.duration;
 
     const categories = ["reading", "visualizations", "exercises"];
     const colors = d3.scaleOrdinal().domain(categories).range(d3.schemeCategory10);
 
     useEffect(() => {
         const svg = d3.select("#timeline");
-        // const colors = d3.scaleOrdinal(d3.schemeCategory10);
 
         // 1. Find the maximum duration
         let maxDuration = 0;
@@ -153,40 +141,6 @@ const Timeline = (props) => {
                 .attr("opacity", 0.7)
                 // .style("mix-blend-mode", "normal");
         });
-        
-        // draw the individual timelines
-        // data.forEach((entryArray, dataIndex) => {
-        //     const svgId = `timeline-${dataIndex + 1}`;
-        //     const svg = d3.select(`#${svgId}`);
-        //     let xOffset = leftX;
-
-        //     svg.append("g")
-        //         .attr("transform", "translate(0,85)")
-        //         .call(d3.axisBottom(xScaleCumulative).ticks(10))
-        //         .append("text")  // Add this line to append a text label
-        //         .attr("fill", "#000")  // Set the text color
-        //         .attr("y", 30)  // The y position of the text
-        //         .attr("dy", ".71em")  // Shift the position a bit to properly align
-        //         .style("text-anchor", "start")  // Anchor the text at the end position
-        //         .attr("x", 350)  // The y position of the text
-        //         .text("Time in seconds");  // The label
-
-        //     entryArray.forEach(entry => {
-        //         const category = entry[0];
-        //         const value = entry[1];
-        //         // const categoryName = categories.find(cat => cat.charAt(0) === category); // Match by first letter
-
-        //         svg.append("rect")
-        //             .attr("x", xOffset)
-        //             .attr("y", 40)
-        //             .attr("width", xScaleCumulative(value) - xScaleCumulative(0))  // Using the scale to get the width
-        //             .attr("height", 30)
-        //             .attr("fill", colors(category));
-
-        //         xOffset += xScaleCumulative(value) - xScaleCumulative(0);
-        //     });
-        // });
-
         // Assuming a height of 10 for each timeline
         const timelineHeight = 10;
         const yOffset = 40; // offset to position the timelines a bit down on the SVG
@@ -275,70 +229,46 @@ const Timeline = (props) => {
             xOffset += currentSpacing;
         });
 
-        const totalSessions = data.length;
-        // Assuming the width of the legend SVG is known
-        const legendWidth = legendSvg.node().getBoundingClientRect().width;
-
-        // Add a label for total number of sessions, right-justified
-        legendSvg.append("text")
-            .attr("x", legendWidth - 10)  // Subtracting 10 for padding
-            .attr("y", 16)
-            .attr("text-anchor", "end")
-            .text(`Total Sessions: ${totalSessions}`);
+        legendSvg.attr("width", xOffset+40);
 
     }, [data]);
-    
-    // State for the slider value
-    const [sliderValue, setSliderValue] = useState(0);
 
-    const handleSliderChange = (event, newValue) => {
-        setSliderValue(newValue);
-    };
+    const totalSessions = data.length;
+    
+    // total duration in seconds
+    let totalDuration = 0;
+    data.forEach(entryArray => {
+        entryArray.forEach(entry => {
+            totalDuration += entry[1];
+        });
+    });
+    const averageSessionLength = (totalDuration/60) / totalSessions;
     
     const ListItemStyled = styled(ListItem)`
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        border: 1px solid #ccc;
+        border: 1px solid var(--primary);
         border-radius: 8px;
         margin: 8px 0;
         padding: 15px;
     `;
-
     return (
         <div className="state-graph">
-            <h3>Multiple Timelines</h3>
+            <h3>Sessions</h3>
             <List>
                 {/* Legend Entry */}
                 <ListItemStyled>
                     <svg id="legend-svg" width="800" height="22"></svg>
+                    <div className="session-info">
+                        <div><b>Total Sessions:</b> {totalSessions}</div>
+                        <div><b>Average Session Length:</b> {averageSessionLength.toFixed(2)} min</div>
+                    </div>
                 </ListItemStyled>
-
                 {/* Combined Timelines Entry */}
                 <ListItemStyled>
                     <svg id="overlay-timeline" width="800" height="300"></svg>
                 </ListItemStyled>
-
-                {/* {data.map((_, index) => (
-                    <ListItemStyled key={index}>
-                        <svg id={`timeline-${index + 1}`} width="800" height="130"></svg>
-                    </ListItemStyled>
-                ))} */}
-                {/* <ListItemStyled>
-                    <Slider
-                        defaultValue={0}
-                        value={sliderValue}
-                        min={1}
-                        max={data.length - 1}
-                        aria-label="Timeline Selector"
-                        valueLabelDisplay="on"
-                        onChange={handleSliderChange}
-                        // onChangeCommitted={handleSliderChange}
-                    />
-                </ListItemStyled>
-                <ListItemStyled>
-                    <svg id={`timeline-${sliderValue}`} width="800" height="130"></svg>
-                </ListItemStyled> */}
                 <ListItemStyled>
                     <svg id={`combined-timeline-svg`} width="800" height="130"></svg>
                 </ListItemStyled>

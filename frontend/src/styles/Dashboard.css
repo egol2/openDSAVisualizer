@@ -1,19 +1,15 @@
-.column1 {
-    padding: 10px;
-    margin-top: 20px
-  }
-
-  .column2 {
+.column2 {
     grid-column: 2;
-    margin-top: 20px
-    
-  }
-  .dashboard-container {
+    margin-right: 20px;
+}
+
+.dashboard-container {
+    /* height: 10vh; */
     border-radius: 8px;
     display: grid;
     grid-template-columns: 20% 80%;
     grid-template-rows: auto auto;
-    grid-gap: 20px;
+    table-layout:fixed
 }
 
 .graph-container {
@@ -22,8 +18,7 @@
     padding-top: 10px;
     padding-left: 20px;
     margin: 10px;
-    width: 95%;
-    max-height: 70vh; 
+    max-height: 75vh;
     overflow-y: auto; 
     display: grid;
     grid-template-rows: auto auto;
@@ -37,16 +32,12 @@
     background-color: var(--secondary);
     padding: 10px; 
     margin-bottom: 10px; 
-    width: 95%;
 }
 
 .upload-button-container {
     border-radius: 8px;
     background-color: var(--primary);
-    padding: 10px;
     margin: 10px; 
-    margin-right: 80px;
-    display: flex;
     align-items: center; 
 }
 
@@ -57,8 +48,6 @@
     color: var(--text);
     font-weight: bold;
     font-size: 25px;
-    padding: 0 5vh;
-    height: 10%;
+    padding: 0 10px;
     align-items: center;
-    width: 100%;
 }

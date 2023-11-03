@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect} from 'react';
 import * as d3 from 'd3';
 import '../styles/ScatterPlot.css';
+
 const ScatterPlot = (props) => {
     const data = props.hintAttemp;
     
@@ -41,12 +42,18 @@ const ScatterPlot = (props) => {
         //setting up axis
         const xAxis = d3.axisBottom(xScale).ticks(15);
         const yAxis = d3.axisLeft(yScale).ticks(25); //10 y1-y2
-        svg.append('g')
+        const xAxisGroup = svg.append('g')
             .call(xAxis)
             .attr('transform', `translate(0, ${h})`);
-        svg.append('g')
+        const yAxisGroup = svg.append('g')
             .call(yAxis);
         
+        // add grid lines
+        xAxisGroup.selectAll('line')
+            .attr('stroke', '#ddd')
+            .attr('stroke-width', 0.5)
+            .attr('y1', -h)
+            .attr('y2', 0);
         
         //setting up axis labaling
         svg.append('text')
@@ -61,6 +68,7 @@ const ScatterPlot = (props) => {
             .style('font-weight', 'bold')
             .attr('transform', 'rotate(-90)') // Rotate the text 90 degrees counterclockwise
             //.attr('dy', '-2em'); // Adjust the vertical positioning of the rotated label
+        
         //setting up svg data
         svg.selectAll()
             .data(data)
@@ -70,6 +78,7 @@ const ScatterPlot = (props) => {
                 .attr('cy', d => yScale(d[1]))
                 .attr('r', 4)
                 .style('fill', '#0069c0')
+                .style('opacity', 0.35) // set opacity to 50%
                 .append('title')  // Add a title element for each circle
                 .text(d => `Hints: ${d[0]}, Attempts: ${d[1]}`);
         svg.style('margin-left', '100px');
@@ -77,6 +86,7 @@ const ScatterPlot = (props) => {
     }, [data])
     return (
         <div className="scatter-plot">
+            <h3>Exercise attempts vs hints</h3>
             <svg ref={svgRef}></svg>
         </div>
     );

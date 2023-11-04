@@ -22,8 +22,8 @@
 }
 
 .list-item.second {
-  /* background-color: var(--tertiary); 
-  fill: 100%; */
+  background-color: var(--tertiary); 
+  fill: 100%;
 }
 
 .list-item:hover {

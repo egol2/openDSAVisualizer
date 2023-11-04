@@ -93,6 +93,16 @@ const Dashboard = () => {
         }
     }, [studentsData]);
 
+    useEffect(() => {
+        document.body.style.backgroundColor = "var(--background)"
+    })
+
+    // useEffect(() => {
+    //     console.log("studentdata!");
+    //     console.log(studentsData);
+    //     console.log("studentdata^");
+    // }, [studentsData]);
+
     const styleObj = {
         color: "var(--text)",
         fontWeight: "bold",

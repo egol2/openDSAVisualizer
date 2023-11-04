@@ -115,6 +115,16 @@ const Dashboard = () => {
         localStorage.setItem('theme', nextTheme);
     };
 
+    useEffect(() => {
+        const currViewMode = localStorage.getItem('viewmode') || 'full';
+        setViewMode(currViewMode)
+    }, []);
+
+    const updateViewMode = (newViewMode) => {
+        setViewMode(newViewMode);
+        localStorage.setItem('viewmode', newViewMode);
+    }
+
     const styleObj = {
         color: "var(--text)",
         fontWeight: "bold",
@@ -149,7 +159,7 @@ const Dashboard = () => {
                     <IconButton sx={iconStyleObj} onClick={toggleDarkMode}>
                         {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
                     </IconButton>
-                    <Button sx={styleObj} onClick={() => setViewMode(viewMode === 'grid' ? 'full' : 'grid')}>
+                    <Button sx={styleObj} onClick={() => updateViewMode(viewMode === 'grid' ? 'full' : 'grid')}>
                         {viewMode === 'grid' ? 'Full View' : 'Grid View'}
                     </Button>
                     <Link to="/"><Button sx={styleObj}>Back to Upload</Button></Link>

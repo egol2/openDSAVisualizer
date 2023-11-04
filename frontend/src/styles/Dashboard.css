@@ -12,7 +12,7 @@
     /* height: 10vh; */
     border-radius: 8px;
     display: grid;
-    grid-template-columns: minmax(0, 20vh) 1fr;
+    grid-template-columns: 250px 1fr;
     grid-template-rows: auto auto;
     table-layout:fixed;
     overflow: auto;
@@ -27,6 +27,7 @@
     max-height: 85vh;
     overflow-y: auto; 
     display: grid;
+    justify-content: center;
 }
 
 .graph-container.grid-view {
@@ -36,6 +37,8 @@
 
 .graph-container.full-view {
     display: grid;
+    justify-content: center;
+    align-items: center;
 }
 
 .graph-container.grid-view .row1,
@@ -66,6 +69,7 @@
     background-color: var(--secondary);
     padding: 10px; 
     margin-bottom: 10px; 
+    max-width: 1000px;
 }
 
 .upload-button-container {

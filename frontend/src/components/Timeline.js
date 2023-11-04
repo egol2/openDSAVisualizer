@@ -5,7 +5,6 @@ import * as d3 from 'd3';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import styled from '@emotion/styled';
-import Slider from '@mui/material/Slider';
 
 const Timeline = (props) => {
     const data = props.duration.session_durations.map(entry => entry[1]);

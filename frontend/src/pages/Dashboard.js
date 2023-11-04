@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import StudentList from '../components/StudentList';
 import StudentDetail from '../components/StudentDetail';
 import { useEffect } from 'react';
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Dashboard = () => {
 
@@ -93,12 +93,6 @@ const Dashboard = () => {
         }
     }, [studentsData]);
 
-    // useEffect(() => {
-    //     console.log("studentdata!");
-    //     console.log(studentsData);
-    //     console.log("studentdata^");
-    // }, [studentsData]);
-
     const styleObj = {
         color: "var(--text)",
         fontWeight: "bold",
@@ -126,7 +120,7 @@ const Dashboard = () => {
             </div>
             <div className="dashboard-container">
                 {isLoading ? (
-                    <div>Loading...</div>
+                    <CircularProgress />
                 ) : (
                     <>
                         <div className= "column1">
@@ -136,7 +130,7 @@ const Dashboard = () => {
                             {selectedStudent && <StudentDetail student={selectedStudent} />}
                             <div className={`graph-container ${viewMode === 'grid' ? 'grid-view' : 'full-view'}`}>
                                 {isLoadingStudent ? (
-                                    <div>Loading...</div>
+                                    <CircularProgress />
                                 ) : (
                                     <>
                                         {viewMode === 'grid' ? (

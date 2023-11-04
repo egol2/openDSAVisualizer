@@ -33,3 +33,19 @@
   cursor: pointer;
   background-color: var(--highlight);
 }
+
+.list-container::-webkit-scrollbar {
+  width: 0.4em;
+  border-radius: 10px;
+}
+
+.list-container::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px var(--highlight);
+  -webkit-box-shadow: inset 0 0 6px var(--highlight);
+}
+
+.list-container::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar);
+  outline: 1px solid var(--scrolloutline);
+  border-radius: 10px;
+}

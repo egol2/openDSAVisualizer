@@ -7,6 +7,9 @@
     --highlight: #8dabd1;
     --text: rgba(37, 35, 35, 0.991);
     --text_secondary: rgba(37, 35, 35, 0.991);
+
+    --scrollbar: #808080;
+    --scrolloutline: #707f90;
 }
 
 [data-theme="dark"] {
@@ -18,4 +21,7 @@
     --highlight: #b76e68;
     --text: #F0EBD8;
     --text_secondary: #bdb9aa; 
+
+    --scrollbar: #808080;
+    --scrolloutline: #707f90;
 }

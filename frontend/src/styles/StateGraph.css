@@ -3,7 +3,7 @@
   }
 
   .state-graph {
-    
+    color: var(--text);
     display: grid;
     place-items: center;
   }

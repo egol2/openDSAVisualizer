@@ -54,14 +54,16 @@ const ScatterPlot = (props) => {
             .attr('y', h + 40)
             .text('Hints')
             .style('font-weight', 'bold')
-            .style('text-anchor', 'middle');
+            .style('text-anchor', 'middle')
+            .style('fill', 'var(--text)');
         svg.append('text')
             .attr('y', -30)
             .attr('x', -h/2)
             .text('Attempts')
             .style('font-weight', 'bold')
             .attr('transform', 'rotate(-90)')
-            .style('text-anchor', 'middle');
+            .style('text-anchor', 'middle')
+            .style('fill', 'var(--text)');
 
         const pointCounts = data.reduce((counts, point) => {
             const key = `${point[0]},${point[1]}`;

@@ -54,7 +54,7 @@ const Timeline = (props) => {
             .attr("transform", "translate(0,"+baseY+")") 
             .call(xAxisCumulative)
             .append("text")  // Add this line to append a text label
-            .attr("fill", "#000")  // Set the text color
+            .attr("fill", "var(--text)")  // Set the text color
             .attr("y", 30)  // The y position of the text
             .attr("dy", ".71em")  // Shift the position a bit to properly align
             .style("text-anchor", "start")  // Anchor the text at the end position
@@ -102,7 +102,7 @@ const Timeline = (props) => {
             .attr("transform", "translate("+ leftX + ",0)") 
             .call(d3.axisLeft(yScaleFrequency).ticks(10))
             .append("text")  // Add this line to append a text label
-            .attr("fill", "#000")  // Set the text color
+            .attr("fill", "var(--text)")  // Set the text color
             .attr("transform", "rotate(-90)")  // Rotate the text to be vertical
             .attr("y", -45)  // The y position of the text
             .attr("dy", ".71em")  // Shift the position a bit to properly align
@@ -182,7 +182,7 @@ const Timeline = (props) => {
             .attr("transform", `translate(${leftX - 10},0)`) // Move a bit left from the starting x position
             .call(d3.axisLeft(yScaleSessions).ticks(data.length/3))
             .append("text")
-            .attr("fill", "#000")
+            .attr("fill", "var(--text)")
             .attr("transform", "rotate(-90)")
             .attr("y", -40)
             .attr("x", -(yOffset + timelineHeight * (data.length - 1) + 5) / 2)
@@ -195,7 +195,7 @@ const Timeline = (props) => {
             .attr("transform", `translate(0,${yOffset + timelineHeight * data.length + 10})`)
             .call(xAxisCumulative)
             .append("text")
-            .attr("fill", "#000")
+            .attr("fill", "var(--text)")
             .attr("y", 30)
             .attr("dy", ".71em")
             .style("text-anchor", "start")
@@ -223,7 +223,8 @@ const Timeline = (props) => {
             legend.append("text")
                 .attr("x", xOffset + 20)
                 .attr("y", 12)
-                .text(category);
+                .text(category)
+                .attr("fill", "var(--text)");
 
             xOffset += currentSpacing;
         });

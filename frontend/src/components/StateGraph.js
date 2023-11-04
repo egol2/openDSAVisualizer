@@ -41,47 +41,47 @@ const StateGraph = (props) => {
             
             <svg viewBox="0 0 700 400" width={svgWidth} height="400" xmlns="http://www.w3.org/2000/svg">
 
-            <path d={`M ${50 + offsetX} 200 q 250 -350 500 0`} stroke="#454747"
+            <path d={`M ${50 + offsetX} 200 q 250 -350 500 0`} stroke="var(--tertiary)"
                 strokeWidth={normalize(props.frequency.transitions.RE)} fill="none">
                 <title>Reading → Exercise: {props.frequency.transitions.RE}</title>
             </path>
-            <text x={295 + offsetX} y={70} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.RE}</text>
-            <polygon points={`${290 + offsetX},5 ${320 + offsetX},25 ${290 + offsetX},45`} style={{fill: "#454747"}} />
+            <text x={295 + offsetX} y={70} fill="var(--text)" fontSize="15" fontWeight="bold">{props.frequency.transitions.RE}</text>
+            <polygon points={`${290 + offsetX},5 ${320 + offsetX},25 ${290 + offsetX},45`} style={{fill: "var(--tertiary)"}} />
 
-            <path d={`M ${50 + offsetX} 200 q 125 -150 250 0`} stroke="#454747"
+            <path d={`M ${50 + offsetX} 200 q 125 -150 250 0`} stroke="var(--tertiary)"
                 strokeWidth={normalize(props.frequency.transitions.RV)} fill="none">
                 <title>Reading → Visualizing: {props.frequency.transitions.RV}</title>
             </path>
-            <text x={165 + offsetX} y={165} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.RV}</text>
-            <polygon points={`${160 + offsetX},105 ${190 + offsetX},125 ${160 + offsetX},145`} style={{fill: "#454747"}} />
+            <text x={165 + offsetX} y={165} fill="var(--text)" fontSize="15" fontWeight="bold">{props.frequency.transitions.RV}</text>
+            <polygon points={`${160 + offsetX},105 ${190 + offsetX},125 ${160 + offsetX},145`} style={{fill: "var(--tertiary)"}} />
 
-            <path d={`M ${300 + offsetX} 200 q 125 -150 250 0`} stroke="#454747"
+            <path d={`M ${300 + offsetX} 200 q 125 -150 250 0`} stroke="var(--tertiary)"
                 strokeWidth={normalize(props.frequency.transitions.VE)} fill="none">
                 <title>Visualizing → Exercise: {props.frequency.transitions.VE}</title>
             </path>
-            <text x={425 + offsetX} y={165} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.VE}</text>
-            <polygon points={`${420 + offsetX},105 ${450 + offsetX},125 ${420 + offsetX},145`} style={{fill: "#454747"}} />
+            <text x={425 + offsetX} y={165} fill="var(--text)" fontSize="15" fontWeight="bold">{props.frequency.transitions.VE}</text>
+            <polygon points={`${420 + offsetX},105 ${450 + offsetX},125 ${420 + offsetX},145`} style={{fill: "var(--tertiary)"}} />
 
-            <path d={`M ${50 + offsetX} 200 q 125 150 250 0`} stroke="#454747"
+            <path d={`M ${50 + offsetX} 200 q 125 150 250 0`} stroke="var(--tertiary)"
                 strokeWidth={normalize(props.frequency.transitions.VR)} fill="none">
                 <title>Visualizing → Reading: {props.frequency.transitions.VR}</title>
             </path>
-            <text x={165 + offsetX} y={245} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.VR}</text>
-            <polygon points={`${200 + offsetX},255 ${170 + offsetX},275 ${200 + offsetX},295`} style={{fill: "#454747"}} />
+            <text x={165 + offsetX} y={245} fill="var(--text)" fontSize="15" fontWeight="bold">{props.frequency.transitions.VR}</text>
+            <polygon points={`${200 + offsetX},255 ${170 + offsetX},275 ${200 + offsetX},295`} style={{fill: "var(--tertiary)"}} />
 
-            <path d={`M ${300 + offsetX} 200 q 125 150 250 0`} stroke="#454747"
+            <path d={`M ${300 + offsetX} 200 q 125 150 250 0`} stroke="var(--tertiary)"
                 strokeWidth={normalize(props.frequency.transitions.EV)} fill="none">
                 <title>Exercise → Visualizing: {props.frequency.transitions.EV}</title>
             </path>
-            <text x={425 + offsetX} y={245} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.EV}</text>
-            <polygon points={`${450 + offsetX},255 ${420 + offsetX},275 ${450 + offsetX},295`} style={{fill: "#454747"}} />
+            <text x={425 + offsetX} y={245} fill="var(--text)" fontSize="15" fontWeight="bold">{props.frequency.transitions.EV}</text>
+            <polygon points={`${450 + offsetX},255 ${420 + offsetX},275 ${450 + offsetX},295`} style={{fill: "var(--tertiary)"}} />
 
-            <path d={`M ${50 + offsetX} 200 q 250 350 500 0`} stroke="#454747"
+            <path d={`M ${50 + offsetX} 200 q 250 350 500 0`} stroke="var(--tertiary)"
                 strokeWidth={normalize(props.frequency.transitions.ER)} fill="none">
                 <title>Exercise → Reading: {props.frequency.transitions.ER}</title>
             </path>
-            <text x={295 + offsetX} y={345} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.ER}</text>
-            <polygon points={`${330 + offsetX},355 ${300 + offsetX},375 ${330 + offsetX},395`} style={{fill: "#454747"}} />
+            <text x={295 + offsetX} y={345} fill="var(--text)" fontSize="15" fontWeight="bold">{props.frequency.transitions.ER}</text>
+            <polygon points={`${330 + offsetX},355 ${300 + offsetX},375 ${330 + offsetX},395`} style={{fill: "var(--tertiary)"}} />
 
             <circle className="vis-circle" cx={300 + offsetX} cy="200"
                     r={normalizeCircle(totalDurations.Visualizations)} stroke="black" strokeWidth="0" fill={colors('Visualizing')} />

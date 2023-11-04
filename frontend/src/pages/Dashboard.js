@@ -26,6 +26,7 @@ const Dashboard = () => {
     const [studentsData, setStudentsData] = useState([]);
     const [studentInfoData, setStudentInfoData] = useState({});
     const [hintAtt, setHint] = useState([]);
+    const [viewMode, setViewMode] = useState('full');
 
     const processStudentData = async () => {
         try {
@@ -99,14 +100,16 @@ const Dashboard = () => {
     // }, [studentsData]);
 
     const styleObj = {
-            color: "var(--text)",
-            fontWeight: "bold",
-            "&:hover": {
-                backgroundColor: "var(--highlight)"
-            },
-            "&:active": {
-                backgroundColor: "var(--highlight)"
-            }
+        color: "var(--text)",
+        fontWeight: "bold",
+        margin: "0 10px",
+        backgroundColor: "var(--secondary)",
+        "&:hover": {
+            backgroundColor: "var(--highlight)"
+        },
+        "&:active": {
+            backgroundColor: "var(--highlight)"
+        }
     };
 
     const fakeFrequency = [8, 1, 10, 3, 4, 5]; //fake frequency for the state graph
@@ -115,6 +118,9 @@ const Dashboard = () => {
             <div className="dashboard-header">
                 Dashboard
                 <div className="upload-button-container">
+                    <Button sx={styleObj} onClick={() => setViewMode(viewMode === 'grid' ? 'full' : 'grid')}>
+                        {viewMode === 'grid' ? 'Full View' : 'Grid View'}
+                    </Button>
                     <Link to="/"><Button sx={styleObj}>Back to Upload</Button></Link>
                 </div>
             </div>
@@ -128,21 +134,34 @@ const Dashboard = () => {
                         </div>
                         <div className= "column2">
                             {selectedStudent && <StudentDetail student={selectedStudent} />}
-                            <div className="graph-container">
+                            <div className={`graph-container ${viewMode === 'grid' ? 'grid-view' : 'full-view'}`}>
                                 {isLoadingStudent ? (
                                     <div>Loading...</div>
                                 ) : (
-                                    <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }}>
-                                        <div className="row1">
-                                            <StateGraph frequency={studentInfoData}/>
-                                        </div>
-                                        <div className="row2">
-                                            <ScatterPlot hintAttemp = {hintAtt}/>
-                                        </div>
+                                    <>
+                                        {viewMode === 'grid' ? (
+                                            <div className="sub-column">
+                                                <div className="row1">
+                                                <StateGraph frequency={studentInfoData}/>
+                                                </div>
+                                                <div className="row2">
+                                                <ScatterPlot hintAttemp = {hintAtt}/>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <div className="row1">
+                                                    <StateGraph frequency={studentInfoData}/>
+                                                </div>
+                                                <div className="row2">
+                                                    <ScatterPlot hintAttemp = {hintAtt}/>
+                                                </div>
+                                            </>
+                                        )}
                                         <div className="row3">
                                             <Timeline duration={studentInfoData}/>
                                         </div>
-                                    </Box>
+                                    </>
                                 )}
                             </div>
                         </div>

@@ -36,8 +36,10 @@ const StateGraph = (props) => {
 
     return (
         <div className="state-graph">
+
+            <h3>Frequency Transitions</h3>
             
-            <svg width={svgWidth} height="400" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 700 400" width={svgWidth} height="400" xmlns="http://www.w3.org/2000/svg">
 
             <path d={`M ${50 + offsetX} 200 q 250 -350 500 0`} stroke="#454747"
                 strokeWidth={normalize(props.frequency.transitions.RE)} fill="none">
@@ -81,19 +83,32 @@ const StateGraph = (props) => {
             <text x={295 + offsetX} y={345} fill="black" fontSize="15" fontWeight="bold">{props.frequency.transitions.ER}</text>
             <polygon points={`${330 + offsetX},355 ${300 + offsetX},375 ${330 + offsetX},395`} style={{fill: "#454747"}} />
 
+            <circle className="vis-circle" cx={300 + offsetX} cy="200"
+                    r={normalizeCircle(totalDurations.Visualizations)} stroke="black" strokeWidth="0" fill={colors('Visualizing')} />
+            <text x={262 + offsetX} y="195" fill="black" fontSize="15" fontWeight="bold">
+                Visualizing
+                <tspan x={262 + offsetX} dy="20" > 
+                    {Math.floor(totalDurations.Visualizations/60)} min
+                </tspan>
+            </text>
 
             <circle className="reading-circle" cx={50 + offsetX} cy="200"
                     r={normalizeCircle(totalDurations.Reading)} stroke="black" strokeWidth="0" fill={colors('Reading')} />
-            <text x={22 + offsetX} y="205" fill="black" fontSize="15" fontWeight="bold">Reading</text>
-
-            <circle className="vis-circle" cx={300 + offsetX} cy="200"
-                    r={normalizeCircle(totalDurations.Visualizations)} stroke="black" strokeWidth="0" fill={colors('Visualizing')} />
-            <text x={262 + offsetX} y="205" fill="black" fontSize="15" fontWeight="bold">Visualizing</text>
+            <text x={22 + offsetX} y="195" fill="black" fontSize="15" fontWeight="bold">
+                Reading
+                <tspan x={22 + offsetX} dy="20" > 
+                    {Math.floor(totalDurations.Reading/60)} min
+                </tspan>
+            </text>
 
             <circle className="ex-circle" cx={550 + offsetX} cy="200"
                     r={normalizeCircle(totalDurations.Exercises)} stroke="black" strokeWidth="0" fill={colors('Exercise')} />
-            <text x={522 + offsetX} y="205" fill="black" fontSize="15" fontWeight="bold">Exercise</text>
-
+            <text x={522 + offsetX} y="195" fill="black" fontSize="15" fontWeight="bold">
+                Exercise
+                <tspan x={522 + offsetX} dy="20" > 
+                    {Math.floor(totalDurations.Exercises/60)} min
+                </tspan>
+            </text>
             </svg>
         </div>       
     );

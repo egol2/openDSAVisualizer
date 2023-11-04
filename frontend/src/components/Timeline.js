@@ -141,6 +141,7 @@ const Timeline = (props) => {
                 .attr("opacity", 0.7)
                 // .style("mix-blend-mode", "normal");
         });
+
         // Assuming a height of 10 for each timeline
         const timelineHeight = 10;
         const yOffset = 40; // offset to position the timelines a bit down on the SVG
@@ -202,7 +203,6 @@ const Timeline = (props) => {
             .attr("x", 790/2)
             .text("Time in minutes");
 
-
         // Render the legend SVG
         const legendSvg = d3.select("#legend-svg");
         const legend = legendSvg.append("g").attr("transform", "translate(20,5)");
@@ -243,9 +243,22 @@ const Timeline = (props) => {
         });
     });
     const averageSessionLength = (totalDuration/60) / totalSessions;
+
+    const [timelineViewBoxHeight, setTimelineViewBoxHeight] = useState(200);
+    const [timelineViewBoxHeight2, setTimelineViewBoxHeight2] = useState(400);
+
+    useEffect(() => {
+        if (d3.select("#overlay-timeline").attr("height")) {
+            setTimelineViewBoxHeight(d3.select("#overlay-timeline").attr("height"));
+        }
+        if (d3.select("#combined-timeline-svg").attr("height")) {
+            setTimelineViewBoxHeight2(d3.select("#combined-timeline-svg").attr("height"));
+        }
+    }, [data]);
     
     const ListItemStyled = styled(ListItem)`
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
         border: 1px solid var(--primary);
@@ -267,10 +280,10 @@ const Timeline = (props) => {
                 </ListItemStyled>
                 {/* Combined Timelines Entry */}
                 <ListItemStyled>
-                    <svg id="overlay-timeline" width="800" height="300"></svg>
+                    <svg id="overlay-timeline" viewBox={`0 0 800 ${timelineViewBoxHeight}`} width="800" height="130"></svg>
                 </ListItemStyled>
                 <ListItemStyled>
-                    <svg id={`combined-timeline-svg`} width="800" height="130"></svg>
+                    <svg id={`combined-timeline-svg`} viewBox={`0 0 800 ${timelineViewBoxHeight2}`} width="800" height="300"></svg>
                 </ListItemStyled>
             </List>
         </div>

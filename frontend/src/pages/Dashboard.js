@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 import StudentList from '../components/StudentList';
 import StudentDetail from '../components/StudentDetail';
 import { useEffect } from 'react';
+import IconButton from '@mui/material/IconButton';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const Dashboard = () => {
@@ -27,6 +30,8 @@ const Dashboard = () => {
     const [studentInfoData, setStudentInfoData] = useState({});
     const [hintAtt, setHint] = useState([]);
     const [viewMode, setViewMode] = useState('full');
+    const [darkMode, setDarkMode] = useState(false);
+
 
     const processStudentData = async () => {
         try {
@@ -97,11 +102,18 @@ const Dashboard = () => {
         document.body.style.backgroundColor = "var(--background)"
     })
 
-    // useEffect(() => {
-    //     console.log("studentdata!");
-    //     console.log(studentsData);
-    //     console.log("studentdata^");
-    // }, [studentsData]);
+    useEffect(() => {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        setDarkMode(currentTheme === 'dark');
+        document.documentElement.setAttribute('data-theme', currentTheme);
+    }, []);
+
+    const toggleDarkMode = () => {
+        const nextTheme = darkMode ? 'light' : 'dark';
+        setDarkMode(!darkMode);
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('theme', nextTheme);
+    };
 
     const styleObj = {
         color: "var(--text)",
@@ -116,12 +128,27 @@ const Dashboard = () => {
         }
     };
 
+    const iconStyleObj = {
+        color: "var(--text)",
+        justifyContent: "flex-end",
+        backgroundColor: "var(--secondary)",
+        "&:hover": {
+            backgroundColor: "var(--highlight)"
+        },
+        "&:active": {
+            backgroundColor: "var(--highlight)"
+        }
+    };
+
     const fakeFrequency = [8, 1, 10, 3, 4, 5]; //fake frequency for the state graph
     return (
         <div>
             <div className="dashboard-header">
                 Dashboard
-                <div className="upload-button-container">
+                    <div className="upload-button-container">
+                    <IconButton sx={iconStyleObj} onClick={toggleDarkMode}>
+                        {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                    </IconButton>
                     <Button sx={styleObj} onClick={() => setViewMode(viewMode === 'grid' ? 'full' : 'grid')}>
                         {viewMode === 'grid' ? 'Full View' : 'Grid View'}
                     </Button>

@@ -1,10 +1,21 @@
 :root {
-
     --primary: #F0EBD8;
     --secondary: #d6d1c0;
-    --tertiary: #40404c;
+    --tertiary: #606072;
     --background: #c9c5b5;
 
     --highlight: #8dabd1;
     --text: rgba(37, 35, 35, 0.991);
+    --text_secondary: rgba(37, 35, 35, 0.991);
+}
+
+[data-theme="dark"] {
+    --primary: #1e1f22;
+    --secondary: #2b2d31;
+    --tertiary: #383a40;
+    --background: #303338;
+
+    --highlight: #b76e68;
+    --text: #F0EBD8;
+    --text_secondary: #bdb9aa; 
 }

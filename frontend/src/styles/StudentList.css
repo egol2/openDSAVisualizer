@@ -10,6 +10,7 @@
 }
 
 .header {
+  color: var(--text);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,10 +19,12 @@
 }
 
 .list-item {
+  color: var(--text_secondary);
   background-color: var(--secondary); 
 }
 
 .list-item.second {
+  color: var(--text_secondary);
   background-color: var(--tertiary); 
   fill: 100%;
 }

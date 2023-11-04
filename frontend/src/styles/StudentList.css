@@ -49,3 +49,7 @@
   outline: 1px solid var(--scrolloutline);
   border-radius: 10px;
 }
+
+.list-container::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollhover);
+} 

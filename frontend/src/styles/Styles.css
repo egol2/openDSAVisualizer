@@ -10,6 +10,7 @@
 
     --scrollbar: #808080;
     --scrolloutline: #707f90;
+    --scrollhover: #4d4d4d;
 }
 
 [data-theme="dark"] {
@@ -24,4 +25,5 @@
 
     --scrollbar: #808080;
     --scrolloutline: #707f90;
+    --scrollhover: #636363;
 }

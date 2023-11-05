@@ -212,4 +212,4 @@ def getDurationBySession(input_data):
         print("\t\tData could not be processed in getDurationbySession. Data:\n", data)
         return []
     finally:
-        print("\t\tDone\n")
+        pass

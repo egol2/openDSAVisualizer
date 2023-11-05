@@ -174,35 +174,42 @@ def getDurationForRow(row):
 # Third element is the duration which the student spent in that state before a transition
 def getDurationBySession(input_data):
     read_session_data(input_data)
-    event_data = data[data['Event Name'].isin(reading + visualization + exercises)]
-    event_data = event_data.reset_index(drop=True)
-    event_data['Event Name'] = event_data['Event Name'].replace(reading, "reading")
-    event_data['Event Name'] = event_data['Event Name'].replace(visualization, "visualizations")
-    event_data['Event Name'] = event_data['Event Name'].replace(exercises, "exercises")
-    event_data['Duration'] = event_data.apply(lambda x:getDurationForRow(x), axis=1)
+    if len(data) == 0:
+        return []
+    try:
+        event_data = data[data['Event Name'].isin(reading + visualization + exercises)]
+        event_data = event_data.reset_index(drop=True)
+        event_data['Event Name'] = event_data['Event Name'].replace(reading, "reading")
+        event_data['Event Name'] = event_data['Event Name'].replace(visualization, "visualizations")
+        event_data['Event Name'] = event_data['Event Name'].replace(exercises, "exercises")
+        event_data['Duration'] = event_data.apply(lambda x:getDurationForRow(x), axis=1)
 
-    threshold = 30 # second
+        threshold = 30 # second
 
-    # Mask value is True if consecutive state, False otherwise
-    mask = event_data['Event Name'] != event_data['Event Name'].shift(1, fill_value=data['Event Name'].iloc[0])
-    group_key = mask.cumsum()
+        # Mask value is True if consecutive state, False otherwise
+        mask = event_data['Event Name'] != event_data['Event Name'].shift(1, fill_value=data['Event Name'].iloc[0])
+        group_key = mask.cumsum()
 
-    # Group by Session and consecutive state mask then sum up the 'Duration' column
-    result = event_data.groupby(['Session', group_key])['Duration'].sum().reset_index()
+        # Group by Session and consecutive state mask then sum up the 'Duration' column
+        result = event_data.groupby(['Session', group_key])['Duration'].sum().reset_index()
 
-    # Dictionary that maps group_key to the original Event Name
-    event_name_mapping = event_data.groupby(group_key)['Event Name'].first().to_dict()
-    # Replace group_key with the original Event Name
-    result['Event Name'] = result["Event Name"].map(event_name_mapping)
+        # Dictionary that maps group_key to the original Event Name
+        event_name_mapping = event_data.groupby(group_key)['Event Name'].first().to_dict()
+        # Replace group_key with the original Event Name
+        result['Event Name'] = result["Event Name"].map(event_name_mapping)
 
-    # Truncate any rows with duration below the threshold
-    result = result[result['Duration'] >= threshold]
+        # Truncate any rows with duration below the threshold
+        result = result[result['Duration'] >= threshold]
 
-    # Returned result is a list of sublists, where each sublist corresponds to a unique session ID (first element in each sublist).
-    # In each session ID sublist there is a list of tuples of form (state, duration)
-    result_grouped = result.groupby('Session').apply(lambda x: [(row['Event Name'], row['Duration']) for _, row in x.iterrows()]).reset_index(name='Processing')
-    result_grouped_list = result_grouped[['Session', 'Processing']].values.tolist()
-
-    print(result_grouped_list)
-    return result_grouped_list
-    
+        # Returned result is a list of sublists, where each sublist corresponds to a unique session ID (first element in each sublist).
+        # In each session ID sublist there is a list of tuples of form (state, duration)
+        result_grouped = result.groupby('Session').apply(lambda x: [(row['Event Name'], row['Duration']) for _, row in x.iterrows()])
+        result_grouped = pd.DataFrame(result_grouped).reset_index()
+        result_grouped.columns = ['Session', 'Processing']
+        result_grouped_list = result_grouped[['Session', 'Processing']].values.tolist()
+        return result_grouped_list
+    except:
+        print("\t\tData could not be processed in getDurationbySession. Data:\n", data)
+        return []
+    finally:
+        print("\t\tDone\n")

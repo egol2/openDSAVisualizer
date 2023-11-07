@@ -5,7 +5,7 @@
   padding: 5px;
   padding-top: 10px;
   background-color: var(--primary);
-  max-height: 92vh;
+  max-height: 87vh;
   overflow: auto;
 }
 
@@ -27,6 +27,10 @@
   color: var(--text_secondary);
   background-color: var(--tertiary); 
   fill: 100%;
+}
+
+.list-item.selected {
+  border: 1px solid var(--text);
 }
 
 .list-item:hover {

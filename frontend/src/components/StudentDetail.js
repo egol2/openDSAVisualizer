@@ -21,6 +21,9 @@ const StudentDetail = ({ student }) => {
           <div className="student-box">
               <p>Final: {student.Final}</p> 
           </div>
+          <div className="student-box">
+              <p>{student.Grade}</p> 
+          </div>
         </div>
       </div>
     );

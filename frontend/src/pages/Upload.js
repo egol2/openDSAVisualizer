@@ -84,17 +84,31 @@ const Upload = () => {
         document.documentElement.setAttribute('data-theme', currentTheme);
     }, []);
   
-    const theme = createTheme({
-        components: {
-            MuiTextField: {
-                styleOverrides: {
-                    root: {
-                        '--TextField-brandBorderColor': 'var(--text)',
-                    },
-                },
+    const colorObj = { 
+        input: { color: 'var(--text)' }, 
+        '& .MuiFormLabel-root': {color: 'var(--text)'},
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: 'var(--primary)',
+            },
+            '&:hover fieldset': {
+              borderColor: 'var(--highlight)',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: 'var(--primary)',
             },
         },
-    }); 
+    };
+
+    const uploadBoxColor = {
+        color: 'var(--text)', 
+        borderColor: 'var(--text)', 
+        backgroundColor: 'var(--primary)', 
+        '&:hover': {
+            backgroundColor: 'var(--highlight)',
+            borderColor: 'var(--text)', 
+        }
+    };
 
     return (
         <div className="upload-page-container">
@@ -109,26 +123,24 @@ const Upload = () => {
                 
                     <Box className='input-box' sx={{ display: 'flex', alignItems: 'center' }}>
                         <FileUploadIcon sx={{ color: 'var(--text)', mr: 0.5, my: 0.5 }} />
-                        <ThemeProvider theme={theme}>
-                        <TextField sx={{ input: { color: 'var(--text)' } }}  label="Exercises"
+                        <TextField sx={colorObj}  label="Exercises"
                         InputLabelProps={{shrink: true,}} type="file" className="input-box" onChange={(event) => handleFileChange(event, setExFile)} />
-                        </ThemeProvider>
                     </Box>
                     <Box className='input-box' sx={{ display: 'flex', alignItems: 'center' }}>
                         <FileUploadIcon sx={{ color: 'var(--text)', mr: 0.5, my: 0.5 }} />
-                        <TextField sx={{ input: { color: 'var(--text)' } }} label="Interactions"
+                        <TextField sx={colorObj} label="Interactions"
                         InputLabelProps={{shrink: true,}} type="file" className="input-box" onChange={(event) => handleFileChange(event, setIntFile)} />
                     </Box>
                     <Box className='input-box' sx={{ display: 'flex', alignItems: 'center' }}>
                         <FileUploadIcon sx={{ color: 'var(--text)', mr: 0.5, my: 0.5 }} />
-                        <TextField sx={{ input: { color: 'var(--text)' } }} label="Scores"
+                        <TextField sx={colorObj} label="Scores"
                         InputLabelProps={{shrink: true,}} type="file" className="input-box" onChange={(event) => handleFileChange(event, setScoreFile)} />
                     </Box>
                     {submitClicked ? (
-                        <CircularProgress />
+                        <CircularProgress sx={{color: 'var(--text)'}} />
                     ) : (
                         
-                        <Button className='upload-button' size="large" variant="outlined" onClick={HandleUpload}>
+                        <Button sx={uploadBoxColor} className='upload-button' size="large" variant="outlined" onClick={HandleUpload}>
                         {uploadButton}
                         </Button>
                     )}

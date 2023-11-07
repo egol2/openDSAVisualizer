@@ -4,8 +4,6 @@
 
 .upload-button {
     margin-top: 30px;
-    color: var(--text);
-    color: var(--tertiary);
     border-radius: 8px;
 }
 

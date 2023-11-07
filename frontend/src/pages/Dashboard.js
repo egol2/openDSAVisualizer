@@ -167,7 +167,7 @@ const Dashboard = () => {
             </div>
             <div className="dashboard-container">
                 {isLoading ? (
-                    <CircularProgress />
+                    <CircularProgress sx={{color: 'var(--text)'}}/>
                 ) : (
                     <>
                         <div className= "column1">
@@ -177,7 +177,7 @@ const Dashboard = () => {
                             {selectedStudent && <StudentDetail student={selectedStudent} />}
                             <div className={`graph-container ${viewMode === 'grid' ? 'grid-view' : 'full-view'}`}>
                                 {isLoadingStudent ? (
-                                    <CircularProgress />
+                                    <CircularProgress sx={{color: 'var(--text)'}}/>
                                 ) : (
                                     <>
                                         {viewMode === 'grid' ? (

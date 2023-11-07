@@ -11,6 +11,8 @@
     --scrollbar: #808080;
     --scrolloutline: #707f90;
     --scrollhover: #4d4d4d;
+
+    --shadow: #1e1f22;
 }
 
 [data-theme="dark"] {

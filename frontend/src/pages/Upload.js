@@ -108,16 +108,20 @@ const Upload = () => {
             backgroundColor: 'var(--highlight)',
             borderColor: 'var(--text)', 
         }
-    };
+    };    
 
     return (
         <div className="upload-page-container">
-            <div className="upload-header"> Upload Files </div>
-            <Link to="dashboard" className="close-button">
-                <IconButton sx={{color: 'var(--text)' }} size="large">
-                    <CloseIcon fontSize="inherit"/>
-                </IconButton>
-            </Link>
+            <div className="upload-header"> 
+                Upload Files
+                <div className="close-button">
+                <Link to="dashboard">
+                    <IconButton sx={{color: "var(--text)"}} size="large">
+                        <CloseIcon fontSize="inherit"/>
+                    </IconButton>
+                </Link> 
+                </div>
+            </div>
             
             <div className='input-file-wrapper'>
                 

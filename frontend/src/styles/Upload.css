@@ -27,17 +27,20 @@
 }
 
 .close-button {
-    position:absolute;
-    top:0%;
-    right:3%;
+    border-radius: 8px;
+    background-color: var(--primary);
+    margin: 10px; 
+    align-items: center; 
     color: var(--text);
 }
 
 .upload-header {
     display: flex;
-    width: 100%;
+    justify-content: space-between;
     background-color: var(--primary);
-    padding: 12px 20px;
-    font-weight: bold;
     color: var(--text);
+    font-weight: bold;
+    padding: 0 10px;
+    font-size: 25px;
+    align-items: center;
   }

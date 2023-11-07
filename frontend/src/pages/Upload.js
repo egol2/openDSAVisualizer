@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import Header from '../components/Header';
 import { useNavigate } from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
+import { useEffect } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const Upload = () => {
     const [exFile, setExFile] = useState(null);
@@ -18,6 +20,7 @@ const Upload = () => {
     const [uploadButton, setUploadButton] = useState("Upload");
     const navigate = useNavigate();
     const [submitClicked, setSubmitClicked] = useState(false);
+    const [darkMode, setDarkMode] = useState(false);
 
     const handleFileChange = (event, setter) => {
       const file = event.target.files[0];
@@ -69,13 +72,35 @@ const Upload = () => {
 
         // Once you have the data, you can navigate to the "dashboard" page
         navigate("dashboard"); // Pass the data as a parameter
-    };
+    };   
+     
+    useEffect(() => {
+        document.body.style.backgroundColor = "var(--background)"
+    })
+
+    useEffect(() => {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        setDarkMode(currentTheme === 'dark');
+        document.documentElement.setAttribute('data-theme', currentTheme);
+    }, []);
   
+    const theme = createTheme({
+        components: {
+            MuiTextField: {
+                styleOverrides: {
+                    root: {
+                        '--TextField-brandBorderColor': 'var(--text)',
+                    },
+                },
+            },
+        },
+    }); 
+
     return (
         <div className="upload-page-container">
             <div className="upload-header"> Upload Files </div>
             <Link to="dashboard" className="close-button">
-                <IconButton size="large">
+                <IconButton sx={{color: 'var(--text)' }} size="large">
                     <CloseIcon fontSize="inherit"/>
                 </IconButton>
             </Link>
@@ -83,18 +108,20 @@ const Upload = () => {
             <div className='input-file-wrapper'>
                 
                     <Box className='input-box' sx={{ display: 'flex', alignItems: 'center' }}>
-                        <FileUploadIcon sx={{ color: 'action.active', mr: 0.5, my: 0.5 }} />
-                        <TextField label="Exercises"
+                        <FileUploadIcon sx={{ color: 'var(--text)', mr: 0.5, my: 0.5 }} />
+                        <ThemeProvider theme={theme}>
+                        <TextField sx={{ input: { color: 'var(--text)' } }}  label="Exercises"
                         InputLabelProps={{shrink: true,}} type="file" className="input-box" onChange={(event) => handleFileChange(event, setExFile)} />
+                        </ThemeProvider>
                     </Box>
                     <Box className='input-box' sx={{ display: 'flex', alignItems: 'center' }}>
-                        <FileUploadIcon sx={{ color: 'action.active', mr: 0.5, my: 0.5 }} />
-                        <TextField label="Interactions"
+                        <FileUploadIcon sx={{ color: 'var(--text)', mr: 0.5, my: 0.5 }} />
+                        <TextField sx={{ input: { color: 'var(--text)' } }} label="Interactions"
                         InputLabelProps={{shrink: true,}} type="file" className="input-box" onChange={(event) => handleFileChange(event, setIntFile)} />
                     </Box>
                     <Box className='input-box' sx={{ display: 'flex', alignItems: 'center' }}>
-                        <FileUploadIcon sx={{ color: 'action.active', mr: 0.5, my: 0.5 }} />
-                        <TextField label="Scores"
+                        <FileUploadIcon sx={{ color: 'var(--text)', mr: 0.5, my: 0.5 }} />
+                        <TextField sx={{ input: { color: 'var(--text)' } }} label="Scores"
                         InputLabelProps={{shrink: true,}} type="file" className="input-box" onChange={(event) => handleFileChange(event, setScoreFile)} />
                     </Box>
                     {submitClicked ? (

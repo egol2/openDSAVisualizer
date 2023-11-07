@@ -32,12 +32,13 @@
     position:absolute;
     top:0%;
     right:3%;
+    color: var(--text);
 }
 
 .upload-header {
     display: flex;
     width: 100%;
-    background-color: var(--secondary);
+    background-color: var(--primary);
     padding: 12px 20px;
     font-weight: bold;
     color: var(--text);

@@ -73,7 +73,7 @@ const Upload = () => {
   
     return (
         <div className="upload-page-container">
-            
+            <div className="upload-header"> Upload Files </div>
             <Link to="dashboard" className="close-button">
                 <IconButton size="large">
                     <CloseIcon fontSize="inherit"/>
@@ -101,7 +101,7 @@ const Upload = () => {
                         <CircularProgress />
                     ) : (
                         
-                        <Button className='upload-button' size="large" variant="outlined" color="error" onClick={HandleUpload}>
+                        <Button className='upload-button' size="large" variant="outlined" onClick={HandleUpload}>
                         {uploadButton}
                         </Button>
                     )}

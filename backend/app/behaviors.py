@@ -152,6 +152,9 @@ def getDurationByModule(input_data):
         module_durations["Exercises"].append(single_duration)
     return module_durations
 
+# Get the duration of the event represented by a row
+# Assumes Event Name is one of: "reading", "visualizations", "exercises" else duration is 0
+# Used in conjunction with getDurationBySession() which cleans and categorizes the data
 def getDurationForRow(row):
     if row["Event Name"] == "reading":
         if "Reading time" in str(row['Action Time']):
@@ -165,37 +168,62 @@ def getDurationForRow(row):
     else:
         return 0
 
+# Get the Module ID associated with a row interaction
+# The Module ID is of the form ##.## for reading or may be a string for vis or exercises
+# Used in conjunction with getDurationBySession() which cleans and categorizes the data
+def assignModuleID(row):
+    match = re.search(r'(\d{2}\.\d{2})', row["Event Description"])
+    if match:
+        return match.group()
+    else:
+        return row['Exercise Type']
+    
+# Get a list of sublists where each sublist represents the significant actions of a single session
+# Sublist is of the form [current state, Module ID (if exists), duration]
 def getDurationBySession(input_data):
     read_session_data(input_data)
-    event_data = data[data['Event Name'].isin(reading + visualization + exercises)]
-    event_data = event_data.reset_index(drop=True)
-    event_data['Event Name'] = event_data['Event Name'].replace(reading, "reading")
-    event_data['Event Name'] = event_data['Event Name'].replace(visualization, "visualizations")
-    event_data['Event Name'] = event_data['Event Name'].replace(exercises, "exercises")
-    event_data['Duration'] = event_data.apply(lambda x:getDurationForRow(x), axis=1)
+    if len(data) == 0:
+        return []
+    try:
+        event_data = data[data['Event Name'].isin(reading + visualization + exercises)]
+        event_data = event_data.reset_index(drop=True)
+        event_data['Event Name'] = event_data['Event Name'].replace(reading, "reading")
+        event_data['Module ID'] = event_data["Event Description"].str.extract(r'(\d{2}\.\d{2})', expand=False)
+        event_data['Event Name'] = event_data['Event Name'].replace(visualization, "visualizations")
+        event_data['Event Name'] = event_data['Event Name'].replace(exercises, "exercises")
 
-    threshold = 1 # second
+        event_data['Module ID'] = event_data.apply(lambda x: assignModuleID(x), axis=1)
+        event_data['Duration'] = event_data.apply(lambda x:getDurationForRow(x), axis=1)
 
-    # Mask value is True if consecutive state, False otherwise
-    mask = event_data['Event Name'] != event_data['Event Name'].shift(1, fill_value=data['Event Name'].iloc[0])
-    group_key = mask.cumsum()
+        threshold = 10 # second
 
-    # Group by Session and consecutive state mask then sum up the 'Duration' column
-    result = event_data.groupby(['Session', group_key])['Duration'].sum().reset_index()
+        # Truncate any rows with duration below the threshold
+        event_data = event_data[event_data['Duration'] >= threshold]
 
-    # Dictionary that maps group_key to the original Event Name
-    event_name_mapping = event_data.groupby(group_key)['Event Name'].first().to_dict()
-    # Replace group_key with the original Event Name
-    result['Event Name'] = result["Event Name"].map(event_name_mapping)
+        # Mask value is True if consecutive state, False otherwise
+        mask = event_data['Event Name'] != event_data['Event Name'].shift(1, fill_value=data['Event Name'].iloc[0])
+        group_key = mask.cumsum()
 
-    # Truncate any rows with duration below the threshold
-    result = result[result['Duration'] >= threshold]
+        # Group by Session and consecutive state mask then sum up the 'Duration' column
+        result = event_data.groupby(['Session', group_key], sort=False)['Duration'].sum().reset_index()
 
-    # Returned result is a list of sublists, where each sublist corresponds to a unique session ID (first element in each sublist).
-    # In each session ID sublist there is a list of tuples of form (state, duration)
-    result_grouped = result.groupby('Session').apply(lambda x: [(row['Event Name'], row['Duration']) for _, row in x.iterrows()]).reset_index(name='Processing')
-    result_grouped_list = result_grouped[['Session', 'Processing']].values.tolist()
+        # Dictionary that maps group_key to the original Event Name and Module ID
+        event_name_mapping = event_data.groupby(group_key, sort=False)['Event Name'].first().to_dict()
+        module_id_mapping = event_data.groupby(group_key, sort=False)['Module ID'].first().to_dict()
+        
+        # Replace group_key with the original Event Name
+        result['Module ID'] = result['Event Name'].map(module_id_mapping)
+        result['Event Name'] = result["Event Name"].map(event_name_mapping)
 
-    print(result_grouped_list)
-    return result_grouped_list
-    
+        # Returned result is a list of sublists, where each sublist corresponds to a unique session ID (first element in each sublist).
+        # In each session ID sublist there is a list of tuples of form (state, duration)
+        result_grouped = result.groupby('Session').apply(lambda x: [(row['Event Name'], row['Module ID'], row['Duration']) for _, row in x.iterrows()])
+        result_grouped = pd.DataFrame(result_grouped).reset_index()
+        result_grouped.columns = ['Session', 'Processing']
+        result_grouped_list = result_grouped[['Session', 'Processing']].values.tolist()
+        return result_grouped_list
+    except:
+        print("\t\tData could not be processed in getDurationbySession. User ID: %s\n" % data['User ID'])
+        return []
+    finally:
+        pass

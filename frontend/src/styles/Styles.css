@@ -1,4 +1,6 @@
+
 :root {
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, fill 0.3s;
     --primary: #F0EBD8;
     --secondary: #d6d1c0;
     --tertiary: #606072;
@@ -16,6 +18,7 @@
 }
 
 [data-theme="dark"] {
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, fill 0.3s;
     --primary: #1e1f22;
     --secondary: #2b2d31;
     --tertiary: #595c66;
@@ -28,4 +31,14 @@
     --scrollbar: #808080;
     --scrolloutline: #707f90;
     --scrollhover: #636363;
+}
+
+/* Elements that are using the custom properties */
+body, button, input, textarea, select, div {
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, fill 0.3s;
+}
+
+/* Other elements that might change */
+a, p, h1, h2, h3, h4, h5, h6 {
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, fill 0.3s;
 }

@@ -109,10 +109,17 @@ const Timeline = (props) => {
             .style("text-anchor", "middle")  // Anchor the text at the end position
             .attr("x", -baseY / 2)  // The y position of the text
             .text("Frequency");  // The label
+
+        const transitionDurations = {
+            reading: 300,
+            visualizations: 450,
+            exercises: 600,
+        };
         
         categories.forEach(category => {
             let upperPoints = [];
-            let lowerPoints = [];
+            // let lowerPoints = [];
+            let zeroPoints = [];
         
             for (let second = 0; second <= maxDuration; second++) {
                 const frequency = calcFrequencyAtSecond(second, category);
@@ -120,7 +127,8 @@ const Timeline = (props) => {
                 // const distanceBetweenPoints = frequency * 20;
         
                 upperPoints.push([xScaleCumulative(second), baseY - (distanceBetweenPoints / 2)]);
-                lowerPoints.push([xScaleCumulative(second), baseY + (distanceBetweenPoints / 2)]);
+                // lowerPoints.push([xScaleCumulative(second), baseY + (distanceBetweenPoints / 2)]);
+                zeroPoints.push([xScaleCumulative(second), baseY]);
             }
         
             const areaGenerator = d3.area()
@@ -130,14 +138,18 @@ const Timeline = (props) => {
                 .curve(d3.curveLinear);
         
             const areaPathUpper = areaGenerator(upperPoints);
-            const areaPathLower = areaGenerator(lowerPoints.reverse());
+            // const areaPathLower = areaGenerator(lowerPoints.reverse());
         
-            const combinedPath = `${areaPathUpper} ${areaPathLower} Z`;
+            // const combinedPath = `${areaPathUpper} ${areaPathLower} Z`;
+            const transitionDuration = transitionDurations[category];
         
             overlaySVG.append("path")
-                .attr("d", areaPathUpper)
-                .attr("fill", colors(category))
                 .attr("opacity", 0.7)
+                .attr("fill", colors(category))
+                .attr("d", areaGenerator(zeroPoints)) // Start with an empty path
+                .transition()
+                .duration(transitionDuration)
+                .attr("d", areaPathUpper)
                 // .style("mix-blend-mode", "normal");
         });
 
@@ -164,8 +176,11 @@ const Timeline = (props) => {
                 svg2.append("rect")
                     .attr("x", xOffset)
                     .attr("y", yPos)
-                    .attr("width", xScaleCumulative(value) - xScaleCumulative(0))
+                    .attr("width", 0)
                     .attr("height", 5)
+                    .transition()
+                    .duration(560)
+                    .attr("width", xScaleCumulative(value) - xScaleCumulative(0))
                     .attr("fill", colors(category));
 
                 xOffset += xScaleCumulative(value) - xScaleCumulative(0);

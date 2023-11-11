@@ -3,7 +3,8 @@
     transition: background-color 0.3s, color 0.3s, border-color 0.3s, fill 0.3s;
     --primary: #F0EBD8;
     --secondary: #d6d1c0;
-    --tertiary: #606072;
+    --tertiary: rgba(96, 96, 114, 1);
+    --tertiary_rgb: 96, 96, 114;
     --background: #c9c5b5;
 
     --highlight: #8dabd1;

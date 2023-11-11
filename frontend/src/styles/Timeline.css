@@ -8,3 +8,10 @@
     width: auto;
     padding-bottom: 10px;
 }
+
+
+#legend-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -25,7 +25,7 @@
 
 .list-item.second {
   color: var(--text_secondary);
-  background-color: var(--tertiary); 
+  background-color: rgba(var(--tertiary_rgb), 0.7); 
   fill: 100%;
 }
 

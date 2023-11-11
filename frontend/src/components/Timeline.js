@@ -23,7 +23,7 @@ const Timeline = (props) => {
         data.forEach(entryArray => {
             let totalSeconds = 0;
             entryArray.forEach(entry => {
-                totalSeconds += entry[1];
+                totalSeconds += entry[2];
             });
             if (totalSeconds > maxDuration) {
                 maxDuration = totalSeconds;
@@ -67,7 +67,7 @@ const Timeline = (props) => {
                 let timeSpent = 0;
                 for (const entry of entryArray) {
                     const currentCategory = entry[0];
-                    const duration = entry[1];
+                    const duration = entry[2];
                     if (currentCategory === category && second >= timeSpent && second <= timeSpent + duration) {
                         countAtSecond += 1;
                     }
@@ -118,39 +118,34 @@ const Timeline = (props) => {
         
         categories.forEach(category => {
             let upperPoints = [];
-            // let lowerPoints = [];
             let zeroPoints = [];
-        
+
             for (let second = 0; second <= maxDuration; second++) {
                 const frequency = calcFrequencyAtSecond(second, category);
                 const distanceBetweenPoints = thicknessScale(frequency);
-                // const distanceBetweenPoints = frequency * 20;
-        
+
                 upperPoints.push([xScaleCumulative(second), baseY - (distanceBetweenPoints / 2)]);
-                // lowerPoints.push([xScaleCumulative(second), baseY + (distanceBetweenPoints / 2)]);
                 zeroPoints.push([xScaleCumulative(second), baseY]);
             }
-        
+
             const areaGenerator = d3.area()
                 .x(d => d[0])
                 .y0(d => d[1])
                 .y1(baseY)
                 .curve(d3.curveLinear);
-        
+
             const areaPathUpper = areaGenerator(upperPoints);
-            // const areaPathLower = areaGenerator(lowerPoints.reverse());
-        
-            // const combinedPath = `${areaPathUpper} ${areaPathLower} Z`;
+
             const transitionDuration = transitionDurations[category];
-        
+
             overlaySVG.append("path")
+                .attr("id", `${category}-path`)
                 .attr("opacity", 0.7)
                 .attr("fill", colors(category))
                 .attr("d", areaGenerator(zeroPoints)) // Start with an empty path
                 .transition()
                 .duration(transitionDuration)
-                .attr("d", areaPathUpper)
-                // .style("mix-blend-mode", "normal");
+                .attr("d", areaPathUpper);
         });
 
         // Assuming a height of 10 for each timeline
@@ -164,6 +159,22 @@ const Timeline = (props) => {
         const svg2 = d3.select("#combined-timeline-svg");
         svg2.attr("height", totalSvgHeight);
 
+        let Tooltip;
+        // let Tooltip = d3.select("body")
+        //     .append("div")
+        //     .style("opacity", 0)
+        //     .attr("class", "tooltip")
+        //     .style("background-color", "var(--primary)")
+        //     .style("border", "solid")
+        //     .style("border-width", "2px")
+        //     .style("border-radius", "5px")
+        //     .style("padding", "5px")
+        //     .style("position", "absolute")
+        //     .style('z-index', -9999)
+        //     .style("color", "var(--text)")
+        //     .style("border-color", "var(--text)");
+
+
         data.forEach((entryArray, dataIndex) => {
             let xOffset = leftX;
             // Calculate y position based on timeline index
@@ -171,20 +182,85 @@ const Timeline = (props) => {
 
             entryArray.forEach(entry => {
                 const category = entry[0];
-                const value = entry[1];
+                const value = entry[2];
+                const label = entry[1];
 
-                svg2.append("rect")
+                const rect = svg2
+                    .append("rect")
+                    .attr("data-label", label)
                     .attr("x", xOffset)
                     .attr("y", yPos)
                     .attr("width", 0)
-                    .attr("height", 5)
-                    .transition()
+                    .attr("height", 7)
+                    .attr("fill", colors(category))
+                    .style("cursor", "pointer");
+                
+                const mouseover = function(event, d) {
+                    if (d3.select(".tooltip").empty()) {
+                        Tooltip = d3.select("body")
+                            .append("div")
+                            .style("opacity", 0)
+                            .attr("class", "tooltip")
+                            .style("background-color", "var(--primary)")
+                            .style("border", "solid")
+                            .style("border-width", "2px")
+                            .style("border-radius", "5px")
+                            .style("padding", "5px")
+                            .style("position", "absolute")
+                            .style('z-index', -9999)
+                            .style("color", "var(--text)")
+                            .style("border-color", "var(--text)");
+                    }
+                    Tooltip.style("opacity", 1)
+                        .style('z-index', "auto");
+                    d3.selectAll(`rect[data-label='${label}']`)
+                        .style("stroke", "var(--text)")
+                        .style("stroke-width", 2)
+                        .style("opacity", 1);
+                };
+
+                const mousemove = function(event) {
+
+                    const svgNode = svg2.node();
+                    const point = svgNode.createSVGPoint();
+                    const matrix = svgNode.getScreenCTM();
+
+                    // Get the pointer coordinates
+                    const [pointerX, pointerY] = d3.pointer(event, this);
+
+                    // Apply the transformation matrix to the pointer coordinates
+                    point.x = pointerX;
+                    point.y = pointerY;
+                    const transformedPoint = point.matrixTransform(matrix);
+
+                    Tooltip
+                        .html(label)
+                        // Use the transformed coordinates for positioning
+                        .style("left", (transformedPoint.x + 15) + "px")
+                        .style("top", (transformedPoint.y - 35) + "px")
+                        .style("opacity", 1);
+                };
+
+                const mouseleave = function() {
+                    if (!d3.select(this).classed("selected")) {
+                        d3.select(".tooltip").remove();
+                        d3.selectAll(`rect[data-label='${label}']`)
+                            .style("stroke", "none")
+                            .style("opacity", 1);
+                    }
+                };
+
+                rect.on("mouseover", mouseover)
+                    .on("mousemove", mousemove)
+                    .on("mouseleave", mouseleave);
+
+                rect.transition()
                     .duration(560)
-                    .attr("width", xScaleCumulative(value) - xScaleCumulative(0))
-                    .attr("fill", colors(category));
+                    .attr("width", xScaleCumulative(value) - xScaleCumulative(0));
 
                 xOffset += xScaleCumulative(value) - xScaleCumulative(0);
             });
+
         });
 
         // Y scale for session numbers
@@ -223,24 +299,50 @@ const Timeline = (props) => {
 
         const computeSpacing = (wordLength) => 35 + wordLength * 7;
 
+        // Select the legend container
+        const legendContainer = d3.select("#legend-container");
+
         let xOffset = 0;
         categories.forEach((category, index) => {
             const wordLength = category.length;
             const currentSpacing = computeSpacing(wordLength);
 
-            legend.append("rect")
-                .attr("x", xOffset)
-                .attr("y", 0)
-                .attr("width", 15)
-                .attr("height", 15)
-                .attr("fill", colors(category));
+            // Append a parent div for the color box and text
+            const parentDiv = legendContainer.append("div")
+                .style("display", "flex")
+                .style("align-items", "center")
+                .style("border", "solid")
+                .style("border-width", "2px")
+                .style("border-radius", "5px")
+                .style("border-color", "var(--primary)")
+                .style("padding", "0 5px")
+                .style("margin-right", "10px")
+                .style("cursor", "pointer");
 
-            legend.append("text")
-                .attr("x", xOffset + 20)
-                .attr("y", 12)
+            // Append a div for the color box
+            parentDiv.append("div")
+                .style("width", "15px")
+                .style("height", "15px")
+                .style("margin", "5px")
+                .style("background-color", colors(category));
+
+            // Append a div for the text
+            parentDiv.append("div")
                 .text(category)
-                .attr("fill", "var(--text)");
+                .style("color", "var(--text)")
+                .style("margin", "5px");
 
+            parentDiv.on("mouseover", function() {
+                const path = d3.select(`#${category}-path`);
+                path.raise();
+                d3.select(this).transition().duration(400).style("background-color", "var(--primary)");
+                path.transition().duration(800).style("stroke", "black");
+            })
+            .on("mouseout", function() {
+                const path = d3.select(`#${category}-path`);
+                d3.select(this).transition().duration(400).style("background-color", "transparent");
+                path.transition().duration(800).style("stroke", "none");
+            });
             xOffset += currentSpacing;
         });
 
@@ -254,7 +356,7 @@ const Timeline = (props) => {
     let totalDuration = 0;
     data.forEach(entryArray => {
         entryArray.forEach(entry => {
-            totalDuration += entry[1];
+            totalDuration += entry[2];
         });
     });
     const averageSessionLength = (totalDuration/60) / totalSessions;
@@ -287,7 +389,7 @@ const Timeline = (props) => {
             <List>
                 {/* Legend Entry */}
                 <ListItemStyled>
-                    <svg id="legend-svg" width="800" height="22"></svg>
+                    <div id="legend-container"></div>
                     <div className="session-info">
                         <div><b>Total Sessions:</b> {totalSessions}</div>
                         <div><b>Average Session Length:</b> {averageSessionLength.toFixed(2)} min</div>

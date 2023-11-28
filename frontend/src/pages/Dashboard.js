@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Button from '@mui/material/Button';
 import '../styles/Dashboard.css';
-import Box from '@mui/material/Box';
 import StateGraph from '../components/StateGraph';
 import ScatterPlot from '../components/ScatterPlot';
 import Timeline from '../components/Timeline';
@@ -19,8 +18,6 @@ const Dashboard = () => {
     const handleStudentClick = (student) => {
         setSelectedStudent(student);
         getStudentInfo(student.user_id);
-        console.log("Student212322\n:");
-        console.log(student);
     }; 
 
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -49,7 +46,7 @@ const Dashboard = () => {
             const response = await fetch('http://localhost:8000/scores');
             
             if (response.ok) {
-                console.log('Get student list successfully');
+                // console.log('Get student list successfully');
                 const data = await response.json();
                 setStudentsData(data);
             } else {
@@ -69,12 +66,10 @@ const Dashboard = () => {
             const response = await fetch(`http://localhost:8000/student/${id}`);
             
             if (response.ok) {
-                console.log('Get student info successfully');
+                // console.log('Get student info successfully');
                 const data = await response.json();
                 setStudentInfoData(data);
                 setHint(data.exercises_info);
-                console.log("Student Info Data!\n:");
-                console.log(data);
             } else {
                 console.error('Failed to get student info:', await response.text());
             } 
@@ -150,7 +145,6 @@ const Dashboard = () => {
         }
     };
 
-    const fakeFrequency = [8, 1, 10, 3, 4, 5]; //fake frequency for the state graph
     return (
         <div>
             <div className="dashboard-header">

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect} from 'react';
+import { useRef, useEffect} from 'react';
 import * as d3 from 'd3';
 import '../styles/ScatterPlot.css';
 

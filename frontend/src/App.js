@@ -1,14 +1,10 @@
-import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from './components/Header';
 
 // import Layout from "./Layout";
 import Upload from "./pages/Upload";
 import Dashboard from './pages/Dashboard';
-
-
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>

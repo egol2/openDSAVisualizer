@@ -11,7 +11,6 @@ import Header from '../components/Header';
 import { useNavigate } from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useEffect } from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const Upload = () => {
     const [exFile, setExFile] = useState(null);
@@ -52,13 +51,10 @@ const Upload = () => {
     };
     const HandleUpload = async () => {
         setSubmitClicked(true);
-        //setUploadButton("Loading...")
-      // Handle file upload logic here, e.g., send the file to a server.
+        // Handle file upload logic here, e.g., send the file to a server.
         console.log('Uploading file:', exFile);
         console.log('Uploading file:', intFile);
         console.log('Uploading file:', scoreFile);
-        //event.preventDefault();
-
         const formData = new FormData();
 
         formData.append('exfile', exFile);  // 'file' is the field name for the server to retrieve the file

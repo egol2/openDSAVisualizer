@@ -1,4 +1,3 @@
-// import React from 'react';
 import React, { useEffect, useState } from 'react';
 import '../styles/Timeline.css';
 import * as d3 from 'd3';
@@ -160,20 +159,6 @@ const Timeline = (props) => {
         svg2.attr("height", totalSvgHeight);
 
         let Tooltip;
-        // let Tooltip = d3.select("body")
-        //     .append("div")
-        //     .style("opacity", 0)
-        //     .attr("class", "tooltip")
-        //     .style("background-color", "var(--primary)")
-        //     .style("border", "solid")
-        //     .style("border-width", "2px")
-        //     .style("border-radius", "5px")
-        //     .style("padding", "5px")
-        //     .style("position", "absolute")
-        //     .style('z-index', -9999)
-        //     .style("color", "var(--text)")
-        //     .style("border-color", "var(--text)");
-
 
         data.forEach((entryArray, dataIndex) => {
             let xOffset = leftX;

@@ -69,10 +69,6 @@ const StudentList = (props) => {
                 <div>Grade</div>
             </ListItem>
             {parsedStudents.map((student, index) => (
-                // <ListItemStyled key={student.user_id} key2={student.Grade} className={`list-item ${index % 2 === 0 ? 'first' : 'second'}`} onClick={() => props.onStudentClick(student)}>
-                //     <span className="student-name">{student.user_id}</span>
-                //     <span className="student-grade">{student.Grade}</span>
-                // </ListItemStyled>
                 <ListItemStyled
                     key={student.user_id}
                     className={`list-item ${index % 2 === 0 ? 'first' : 'second'} ${selectedStudent && selectedStudent.user_id === student.user_id ? 'selected' : ''}`}

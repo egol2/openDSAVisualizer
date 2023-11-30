@@ -8,7 +8,7 @@ reading = ["document event", "window event", "Window open", "Window close"]
 visualization = ['FF event']
 exercises = ['PE event']
 
-# Reads Interactions file generated from abstracing_script with suffix _merged_result_unannotated.csv
+# Reads Interactions Python dataframe generated from abstractor.py
 def read_session_data(input_data):
     global data
     data = input_data

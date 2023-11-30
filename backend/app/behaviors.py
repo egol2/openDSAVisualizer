@@ -49,7 +49,7 @@ def getTransitionCounts(input_data):
     # Process data
     for i in data.index - 1:
         current_session = data.iloc[i]['Session']
-        # If the event lies within the threshold
+        # Classify the state of each interaction
         if data.iloc[i]['Event Name'] in reading:
             current_state = 'R'
         elif data.iloc[i]['Event Name'] in visualization:

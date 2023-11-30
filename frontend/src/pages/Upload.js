@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useEffect } from 'react';
 
+import { DOMAIN, BACKEND_PORT } from '../components/Header';
+
 const Upload = () => {
     const [exFile, setExFile] = useState(null);
     const [intFile, setIntFile] = useState(null);
@@ -32,7 +34,7 @@ const Upload = () => {
             formData.append('file', file);
 
             try {
-                const response = await fetch(`http://localhost:8000${endpoint}`, { // '/upload-endpoint' is your server's endpoint to handle file uploads
+                const response = await fetch(`http://${DOMAIN}:${BACKEND_PORT}${endpoint}`, { // '/upload-endpoint' is your server's endpoint to handle file uploads
                     method: 'POST',
                     body: formData,
                 });

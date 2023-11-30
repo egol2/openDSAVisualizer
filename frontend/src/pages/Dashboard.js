@@ -13,6 +13,8 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { DOMAIN, BACKEND_PORT } from '../components/Header';
+
 const Dashboard = () => {
 
     const handleStudentClick = (student) => {
@@ -32,7 +34,7 @@ const Dashboard = () => {
 
     const processStudentData = async () => {
         try {
-            const res = fetch('http://localhost:8000/process', {
+            const res = fetch(`http://${DOMAIN}:${BACKEND_PORT}/process`, {
                 method: 'PUT'
             });
         } catch (error) {
@@ -43,7 +45,7 @@ const Dashboard = () => {
     const getStudents = async () => {
         setIsLoading(true);
         try { 
-            const response = await fetch('http://localhost:8000/scores');
+            const response = await fetch(`http://${DOMAIN}:${BACKEND_PORT}/scores`);
             
             if (response.ok) {
                 // console.log('Get student list successfully');
@@ -63,7 +65,7 @@ const Dashboard = () => {
     const getStudentInfo = async (id) => {
         setIsLoadingStudent(true);
         try {
-            const response = await fetch(`http://localhost:8000/student/${id}`);
+            const response = await fetch(`http://${DOMAIN}:${BACKEND_PORT}/student/${id}`);
             
             if (response.ok) {
                 // console.log('Get student info successfully');
